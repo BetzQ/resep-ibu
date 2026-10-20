@@ -144,12 +144,53 @@ body {
   outline: 5px solid #f59e0b;
   outline-offset: 3px;
 }
+/* Bungkus kartu: menampung tombol simpan (☆) di pojok kartu */
+.kartu-bungkus { position: relative; }
 /* Optimasi: kartu di luar layar tidak dilayout dulu — HP lansia tetap lancar
    walau ada ratusan resep. Ukuran disimpan supaya halaman tidak "melompat". */
-.grid-resep > .kartu-resep {
+.grid-resep > .kartu-bungkus {
   content-visibility: auto;
   contain-intrinsic-size: auto 340px;
 }
+/* ---------- TOMBOL SIMPAN FAVORIT (BOOKMARK) ---------- */
+/* Versi kecil di pojok kartu daftar resep */
+.tombol-favorit {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 800;
+  padding: 10px 14px;
+  min-height: 48px;
+  border-radius: 12px;
+  border: 3px solid var(--warna-hijau-tua);
+  background: #ffffff;
+  color: var(--warna-hijau-tua);
+  cursor: pointer;
+  line-height: 1.2;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28);
+}
+.tombol-favorit.aktif { background: var(--warna-hijau); color: #ffffff; }
+.tombol-favorit:focus-visible { outline: 4px solid #f59e0b; outline-offset: 2px; }
+/* Versi besar di halaman detail resep */
+.tombol-simpan {
+  display: block;
+  width: 100%;
+  font-family: inherit;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--warna-hijau-tua);
+  background: #ffffff;
+  border: 4px solid var(--warna-hijau-tua);
+  border-radius: 16px;
+  padding: 18px 16px;
+  margin: 12px 0;
+  cursor: pointer;
+}
+.tombol-simpan.aktif { background: var(--warna-hijau); color: #ffffff; }
+.tombol-simpan:focus-visible { outline: 5px solid #f59e0b; outline-offset: 3px; }
 .kartu-gambar {
   width: 100%;
   height: 220px;
@@ -707,6 +748,9 @@ body {
   .tombol-pasar { font-size: 27px; padding: 22px 16px; }
   .tombol-merah, .tombol-netral { font-size: 24px; padding: 18px 16px; }
   .tombol-muat-lebih { font-size: 25px; padding: 22px 14px; margin: 20px 0; }
+  /* Tombol simpan favorit: jelas & enak disentuh jari */
+  .tombol-favorit { font-size: 20px; padding: 12px 14px; min-height: 52px; }
+  .tombol-simpan { font-size: 24px; padding: 20px 14px; }
 
   /* Detail resep: foto tidak menutupi seluruh layar awal */
   .foto-resep { max-height: 300px; border-width: 3px; }

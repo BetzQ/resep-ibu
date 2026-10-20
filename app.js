@@ -10,9 +10,14 @@
 "use strict";
 
 const KUNCI_LOKAL = "pasar_v1_"; // awalan nama penyimpanan di browser
+const KUNCI_FAVORIT = "favorit_v1_daftar"; // daftar resep tersimpan (bookmark) di browser
 
 const JUMLAH_KARTU_AWAL = 24; // kartu dirender bertahap supaya HP lansia tetap lancar
 const JUMLAH_TAMBAHAN = 24;
+
+// Resep yang ditandai ibu sebagai favorit (hanya id resep makanan —
+// bahan/bumbu/checklist pasar TIDAK ikut disimpan di sini).
+let daftarFavorit = new Set();
 
 const aplikasi = {
   semuaResep: [],
@@ -39,6 +44,8 @@ async function mulai() {
     if (!jawaban.ok) throw new Error("Gagal memuat data");
     const data = await jawaban.json();
     aplikasi.semuaResep = data.resep;
+    muatFavorit(); // resep tersimpan (bookmark) dari localStorage
+    perbaruiHitungFavorit();
     gambarDaftarResep();
     muatDariAlamat(); // kalau dibuka langsung lewat tautan resep
     fetchViralRecipes(); // section "Lagi Rame" di paling atas
@@ -116,9 +123,14 @@ function pasangTombolUtama() {
    --------------------------------------------------------- */
 function resepTersaring() {
   const cari = aplikasi.kataCari;
+  const kategori = aplikasi.kategoriAktif;
   return aplikasi.semuaResep.filter(function (resep) {
+    // kategori "tersimpan" = hanya resep yang ditandai favorit ibu
     const cocokKategori =
-      aplikasi.kategoriAktif === "semua" || resep.kategori === aplikasi.kategoriAktif;
+      kategori === "semua" ||
+      (kategori === "tersimpan"
+        ? daftarFavorit.has(resep.id)
+        : resep.kategori === kategori);
     if (!cocokKategori) return false;
     if (cari === "") return true;
     if (resep.nama.toLowerCase().includes(cari)) return true;
@@ -147,6 +159,16 @@ function gambarDaftarResep(tambahSaja) {
     daftar.length + " resep siap dibaca." +
     (sisa > 0 ? " Menampilkan " + tampil + " dulu, sisanya menyusul." : "");
   kosong.hidden = daftar.length !== 0;
+  if (daftar.length === 0) {
+    // pesan kotak kosong menyesuaikan: belum menyimpan resep vs kata kunci tak ketemu
+    kosong.innerHTML =
+      aplikasi.kategoriAktif === "tersimpan" && aplikasi.kataCari === ""
+        ? "<p class='text-2xl'>⭐ Belum ada resep yang tersimpan.</p>" +
+          "<p class='teks-kecil-abu mt-2'>Cara menyimpan: buka resep lalu tekan tombol " +
+          "\"⭐ SIMPAN RESEP INI\", atau tekan tombol \"☆ SIMPAN\" di pojok kanan atas kartu resep.</p>"
+        : "<p class='text-2xl'>😕 Resep tidak ditemukan.</p>" +
+          "<p class='teks-kecil-abu mt-2'>Coba kata kunci lain, misalnya “ayam”, “ikan”, atau “soto”.</p>";
+  }
   tombolMuat.hidden = sisa <= 0;
   tombolMuat.textContent = "📜 TAMPILKAN LEBIH BANYAK (sisa " + sisa + " resep)";
 
@@ -170,6 +192,11 @@ function gambarDaftarResep(tambahSaja) {
 }
 
 function buatKartuResep(resep) {
+  // Kartu dibungkus div supaya tombol simpan (☆) bisa duduk di pojok kartu
+  // tanpa bersarang di dalam tombol kartu (HTML tidak boleh bertumpuk).
+  const bungkus = document.createElement("div");
+  bungkus.className = "kartu-bungkus";
+
   const tombol = document.createElement("button");
   tombol.className = "kartu-resep";
   tombol.type = "button";
@@ -184,7 +211,21 @@ function buatKartuResep(resep) {
   tombol.addEventListener("click", function () {
     window.location.hash = "#/resep/" + resep.id;
   });
-  return tombol;
+
+  // Tombol simpan favorit (hanya menandai id resep makanan ini saja)
+  const tombolSimpan = document.createElement("button");
+  tombolSimpan.className = "tombol-favorit";
+  tombolSimpan.type = "button";
+  tombolSimpan.dataset.favorit = resep.id;
+  tombolSimpan.setAttribute(
+    "aria-label",
+    "Simpan resep " + resep.nama + " ke daftar tersimpan"
+  );
+  pasangTombolFavorit(tombolSimpan, resep);
+
+  bungkus.appendChild(tombol);
+  bungkus.appendChild(tombolSimpan);
+  return bungkus;
 }
 
 function keDaftarResep() {
@@ -243,12 +284,28 @@ function gambarDetailResep(resep) {
       '<span class="kotak-info">👨‍👩‍👧 Porsi: ' + amanTeks(resep.porsi) + "</span>" +
       '<span class="kotak-info">🎯 Tingkat: ' + amanTeks(resep.tingkat) + "</span>" +
     "</div>" +
+    tombolSimpanResep(resep) +
     tombolMenujuPasar(resep) +
     bagianDaftar("🧅 BAHAN UTAMA", resep.bahan || resep.bahanUtama || [], "judul-bagian", false) +
     bagianDaftar("🌶️ BUMBU-BUMBU", resep.bumbu || [], "judul-bagian judul-bagian-merah", false) +
     bagianDaftar("🍳 ALAT MASAK", resep.alat_masak || resep.alat || [], "judul-bagian judul-bagian-biru", true) +
     bagianLangkah(resep) +
     bagianTips(resep);
+
+  // pasang aksi tombol simpan (status tersimpan/tidak sesuai localStorage)
+  const tombolSimpan = document.getElementById("tombol-simpan-resep");
+  if (tombolSimpan) pasangTombolFavorit(tombolSimpan, resep);
+}
+
+// Tombol simpan resep (favorit) di halaman detail — hanya id resep makanan
+// yang disimpan, bumbu dan checklist pasar tidak ikut.
+function tombolSimpanResep(resep) {
+  return (
+    '<button class="tombol-simpan" type="button" id="tombol-simpan-resep" ' +
+    'data-favorit="' + amanTeks(resep.id) + '" aria-pressed="false">' +
+    "⭐ SIMPAN RESEP INI" +
+    "</button>"
+  );
 }
 
 function tombolMenujuPasar(resep) {
@@ -619,6 +676,74 @@ function pasangTombolGulirViral() {
   const jarak = Math.max(240, wadah.clientWidth - 80);
   kiri.addEventListener("click", function () { wadah.scrollLeft -= jarak; });
   kanan.addEventListener("click", function () { wadah.scrollLeft += jarak; });
+}
+
+/* ---------------------------------------------------------
+   4C. FAVORIT / RESEP TERSIMPAN (BOOKMARK)
+   Hanya menyimpan id resep makanan — bumbu, alat, dan
+   checklist Mode Pasar TIDAK ikut. Data disimpan di
+   localStorage browser (aman meskipun halaman ditutup).
+   --------------------------------------------------------- */
+function muatFavorit() {
+  try {
+    const teks = localStorage.getItem(KUNCI_FAVORIT);
+    const isi = teks ? JSON.parse(teks) : [];
+    daftarFavorit = new Set(Array.isArray(isi) ? isi : []);
+  } catch (e) {
+    daftarFavorit = new Set();
+  }
+}
+
+// Jumlah resep tersimpan yang benar-benar ada di data
+// (id resep lama yang sudah tidak ada di data akan diabaikan).
+function jumlahFavorit() {
+  return aplikasi.semuaResep.filter(function (r) {
+    return daftarFavorit.has(r.id);
+  }).length;
+}
+
+function perbaruiHitungFavorit() {
+  const kotak = document.getElementById("jumlah-favorit");
+  if (kotak) kotak.textContent = jumlahFavorit();
+}
+
+// Menyesuaikan tampilan tombol simpan: masih kosong (☆) atau sudah terisi (★).
+function aturTampilFavorit(tombol, tersimpan) {
+  const tombolBesar = tombol.classList.contains("tombol-simpan"); // tombol di halaman detail
+  if (tersimpan) tombol.classList.add("aktif");
+  else tombol.classList.remove("aktif");
+  tombol.setAttribute("aria-pressed", tersimpan ? "true" : "false");
+  tombol.textContent = tersimpan
+    ? (tombolBesar ? "⭐ RESEP SUDAH TERSIMPAN — tekan untuk menghapus" : "★ TERSIMPAN")
+    : (tombolBesar ? "⭐ SIMPAN RESEP INI" : "☆ SIMPAN");
+}
+
+function pasangTombolFavorit(tombol, resep) {
+  aturTampilFavorit(tombol, daftarFavorit.has(resep.id));
+  tombol.addEventListener("click", function (peristiwa) {
+    if (peristiwa && peristiwa.stopPropagation) peristiwa.stopPropagation();
+    tekanFavorit(resep);
+  });
+}
+
+function tekanFavorit(resep) {
+  if (daftarFavorit.has(resep.id)) daftarFavorit.delete(resep.id);
+  else daftarFavorit.add(resep.id);
+  try {
+    localStorage.setItem(KUNCI_FAVORIT, JSON.stringify(Array.from(daftarFavorit)));
+  } catch (e) {
+    console.error("Penyimpanan browser penuh atau diblokir.", e);
+  }
+
+  const tersimpan = daftarFavorit.has(resep.id);
+  // perbarui semua tombol resep yang sama (kartu di daftar & tombol di detail)
+  document.querySelectorAll('[data-favorit="' + resep.id + '"]').forEach(function (tombol) {
+    aturTampilFavorit(tombol, tersimpan);
+  });
+  perbaruiHitungFavorit();
+
+  // kalau sedang membuka daftar "⭐ Tersimpan", daftar ikut diperbarui
+  if (aplikasi.kategoriAktif === "tersimpan") gambarDaftarResep();
 }
 
 /* ---------------------------------------------------------
