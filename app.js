@@ -45,7 +45,7 @@ let posisiDaftar = 0;
 let shortsTerbuka = false; // sedang di Mode Shorts?
 let posisiShorts = 0; // posisi gulir daftar sebelum masuk Mode Shorts
 let antreanShorts = []; // urutan resep yang tampil sebagai video
-let suaraShortsNyala = false; // video mulai dalam keadaan bisu
+let suaraShortsNyala = false; // Mode Shorts selalu bisu (browser melarang autoplay bersuara)
 let pengamatShorts = null; // pemantau video mana yang sedang tampil
 let itemAktifShorts = null; // video yang sedang dilihat
 let jedaLihatShorts = null; // penghitung 3 detik
@@ -1167,11 +1167,6 @@ function pasangTombolShorts() {
     });
   }
 
-  const tombolSuara = document.getElementById("shorts-suara");
-  if (tombolSuara) {
-    tombolSuara.addEventListener("click", alihSuaraShorts);
-  }
-
   // Catatan: tombol CARI dipasang per video di dalam buatItemShorts()
   // karena setiap video punya tombolnya sendiri di sisi kanan layar.
 
@@ -1490,7 +1485,7 @@ function pasangCadanganShortsItem(item) {
   if (wadahYt) wadahYt.hidden = true;
   if (video) {
     video.hidden = false;
-    video.muted = !suaraShortsNyala;
+    video.muted = true; // Mode Shorts selalu tanpa suara
     pilihVideoTerpasang(video);
   }
   item.dataset.pakaiCadangan = "1";
@@ -1566,33 +1561,11 @@ function letakkanItemAktifShorts(item, resep) {
 }
 
 function alihSuaraShorts() {
-  suaraShortsNyala = !suaraShortsNyala;
-  const tombol = document.getElementById("shorts-suara");
-  const ikon = document.getElementById("shorts-ikon-suara");
-  const teks = tombol ? tombol.querySelector(".shorts-suara-teks") : null;
-  if (tombol) tombol.setAttribute("aria-pressed", suaraShortsNyala ? "true" : "false");
-  if (ikon) ikon.textContent = suaraShortsNyala ? "🔊" : "🔇";
-  if (teks) teks.textContent = suaraShortsNyala ? "SUARA NYALA" : "SUARA MATI";
-
-  // Video Wikimedia: atur bisu/tidak.
-  const feed = document.getElementById("shorts-feed");
-  if (feed && feed.querySelectorAll) {
-    feed.querySelectorAll("video").forEach(function (video) {
-      video.muted = !suaraShortsNyala;
-      if (suaraShortsNyala && !video.hidden) pilihVideoTerpasang(video);
-    });
-  }
-
-  // YouTube tidak bisa dibunyikan dari luar halaman. Jadi kalau ibu menekan
-  // SUARA NYALA sementara yang tampil video YouTube, kita buka videonya di
-  // tab baru supaya bisa didengar (dengan suara).
-  if (suaraShortsNyala && itemAktifShorts && !itemAktifShorts.dataset.pakaiCadangan) {
-    const idYt = itemAktifShorts.dataset.youtube || "";
-    if (idYt && window.open) {
-      const url = "https://www.youtube.com/watch?v=" + idYt;
-      try { window.open(url, "_blank", "noopener"); } catch (e) { /* diabaikan */ }
-    }
-  }
+  // Mode Shorts selalu tanpa suara: browser melarang video otomatis berbunyi,
+  // dan YouTube tidak mengizinkan suaranya diatur dari halaman lain. Supaya
+  // tidak membingungkan, tombol suara sudah dihapus dari Mode Shorts.
+  // Untuk video bersuara, ibu cukup tekan tombol RESEP lalu putar videonya
+  // di halaman resep.
 }
 
 function bukaKotakCariShorts() {

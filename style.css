@@ -1029,9 +1029,8 @@ body {
   border-color: #ffffff;
 }
 
-/* ---------- Tombol keluar (kiri atas) & suara (kanan atas) ---------- */
-.shorts-keluar,
-.shorts-suara {
+/* ---------- Tombol keluar (kiri atas) ---------- */
+.shorts-keluar {
   position: absolute;
   top: max(12px, env(safe-area-inset-top, 0px));
   z-index: 8;
@@ -1045,22 +1044,12 @@ body {
   border: 3px solid rgba(255, 255, 255, 0.85);
   cursor: pointer;
   touch-action: manipulation;
-}
-.shorts-keluar {
   left: 12px;
   font-size: 20px;
   padding: 14px 16px;
   border-radius: 16px;
 }
-.shorts-suara {
-  right: 12px;
-  font-size: 28px;
-  padding: 12px 14px;
-  border-radius: 18px;
-}
-.shorts-suara-teks { font-size: 16px; font-weight: 800; }
-.shorts-keluar:focus-visible,
-.shorts-suara:focus-visible { outline: 5px solid #f59e0b; outline-offset: 3px; }
+.shorts-keluar:focus-visible { outline: 5px solid #f59e0b; outline-offset: 3px; }
 
 /* ---------- Bilah pencarian di dalam Mode Shorts ---------- */
 .shorts-cari-bungkus {
@@ -1275,9 +1264,7 @@ body {
   .baris-tombol-utama { gap: 8px; padding: 8px 0; }
   .tombol-shorts, .tombol-normal { font-size: 22px; padding: 18px 8px; border-radius: 16px; }
 
-  .shorts-keluar { font-size: 19px; padding: 14px 14px; }
-  .shorts-suara { font-size: 26px; padding: 12px 12px; }
-  .shorts-suara-teks { display: none; } /* di HP cukup ikon besar 🔊/🔇 */
+  .shorts-keluar { font-size: 20px; padding: 16px 18px; }
 
   .shorts-panel {
     left: 10px;
