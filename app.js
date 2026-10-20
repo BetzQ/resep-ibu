@@ -1429,8 +1429,8 @@ function cariResepShorts(id) {
 }
 
 // Memasang video saat item mendekati layar.
-// YouTube jadi sumber utama (paling nyambung dengan masakannya), dan video
-// Wikimedia jadi cadangan kalau YouTube tidak mau berputar otomatis.
+// YouTube jadi sumber utama (paling nyambung dengan masakannya). Video
+// Wikimedia hanya dipakai kalau resep ini memang tidak punya video YouTube.
 function pasangVideoItemShorts(item) {
   const video = item.querySelector ? item.querySelector("video") : null;
   const wadahYt = item.querySelector ? item.querySelector(".shorts-yt") : null;
@@ -1458,18 +1458,21 @@ function pasangVideoItemShorts(item) {
       el.setAttribute("allowfullscreen", "true");
       el.setAttribute("title", "Video cara memasak");
       el.setAttribute("frameborder", "0");
+      // Kalau iframe gagal dimuat sama sekali (mis. diblokir jaringan),
+      // baru pakai video cadangan. Bukan karena "tidak lapor sudah jalan".
+      el.addEventListener("error", function () {
+        pasangCadanganShortsItem(item);
+      });
       wadahYt.appendChild(el);
-      // Beri waktu YouTube memuat; kalau tidak berputar, pakai video cadangan.
-      clearTimeout(item._jedaYtShorts);
-      item._jedaYtShorts = setTimeout(function () {
-        if (item !== itemAktifShorts) return;
-        if (!item.dataset.youtubeJalan) pasangCadanganShortsItem(item);
-      }, 3500);
+      // Video cadangan disiapkan (tersembunyi) tapi TIDAK diputar — kalau
+      // YouTube benar-benar gagal, baru diputar tanpa jeda.
+      if (video) video.hidden = true;
     }
+    return; // sudah pakai YouTube, jangan diganti-ganti
   }
 
-  // Kalau tidak ada YouTube sama sekali, langsung pakai video cadangan.
-  if (!idYt && video) pasangCadanganShortsItem(item);
+  // Tanpa video YouTube: langsung pakai video cadangan.
+  if (video) pasangCadanganShortsItem(item);
 }
 
 function youtubeEmbedShorts(id) {
@@ -1497,17 +1500,21 @@ function pasangCadanganShortsItem(item) {
 function tandaiYoutubeJalanShorts(item) {
   if (!item) return;
   item.dataset.youtubeJalan = "1";
-  clearTimeout(item._jedaYtShorts); // jangan pakai cadangan kalau YouTube jalan
+  // Pakai YouTube: hentikan & sembunyikan video cadangan di belakang layar.
   const video = item.querySelector ? item.querySelector("video") : null;
-  if (video && video.pause) video.pause();
+  if (video) {
+    if (video.pause) video.pause();
+    video.hidden = true;
+  }
   const wadahYt = item.querySelector ? item.querySelector(".shorts-yt") : null;
   if (wadahYt) wadahYt.hidden = false;
+  delete item.dataset.pakaiCadangan;
 }
 
 // Kabar dari pemutar YouTube (postMessage) bahwa videonya sudah berputar.
 // Pemutar YouTube mengirim pesan seperti {"event":"onStateChange",...} dengan
-// info playerState 1 = sedang berputar. Kalau tidak ada kabar, watchdog 3,5
-// detik di atas yang akan memakai video cadangan.
+// info playerState 1 = sedang berputar. Kabar ini hanya dipakai untuk
+// mematikan video cadangan di belakang layar — bukan untuk mengganti video.
 function dengarkanKabarYoutubeShorts() {
   if (typeof window === "undefined" || !window.addEventListener) return;
   window.addEventListener("message", function (peristiwa) {
@@ -1541,7 +1548,6 @@ function lepasVideoItemShorts(item) {
     if (iframe && iframe.remove) iframe.remove();
     wadahYt.hidden = false;
   }
-  clearTimeout(item._jedaYtShorts);
   delete item.dataset.youtubeSiap;
   delete item.dataset.youtubeJalan;
   delete item.dataset.pakaiCadangan;

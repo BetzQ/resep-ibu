@@ -900,7 +900,7 @@ body {
 .shorts-yt {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 2; /* di atas video cadangan supaya YouTube yang terlihat */
   overflow: hidden;
   background: #0e0e0e;
   pointer-events: none;
