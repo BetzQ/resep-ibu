@@ -52,6 +52,10 @@ let jedaLihatShorts = null; // penghitung 3 detik
 let sudahDihitungShorts = new Set(); // biar satu video tidak dihitung dua kali
 let jedaCariShorts = null;
 
+// Keadaan video cara memasak di halaman detail resep
+let videoResepAktif = null; // video yang sedang tampil di halaman detail biasa
+let videoModalAktif = null; // video yang sedang tampil di dalam modal Mode Shorts
+
 /* ---------------------------------------------------------
    1. MULAI APLIKASI
    --------------------------------------------------------- */
@@ -277,10 +281,24 @@ function tampilkanDaftar() {
   aplikasi.modePasar = false;
   aplikasi.resepAktif = null;
   if (dariShorts) matikanShorts(); // hentikan video + lepas pemantau dsb.
+  hentikanVideoResep(); // video cara memasak di halaman detail juga dihentikan
   document.getElementById("halaman-resep").hidden = true;
   document.getElementById("halaman-daftar").hidden = false;
   window.scrollTo(0, dariShorts ? posisiShorts : (dariHalamanResep ? posisiDaftar : 0));
   document.title = "Buku Resep Ibu-Ibu — Resep Masakan Lengkap";
+}
+
+// Menghentikan video cara memasak di halaman detail biasa (hemat kuota).
+function hentikanVideoResep() {
+  const video = videoResepAktif || document.getElementById("video-resep");
+  if (video) {
+    if (video.pause) video.pause();
+    if (video.setAttribute && video.getAttribute && video.getAttribute("src")) {
+      video.removeAttribute("src");
+      if (video.load) video.load();
+    }
+  }
+  videoResepAktif = null;
 }
 
 /* ---------------------------------------------------------
@@ -319,11 +337,15 @@ function gambarDetailResep(resep, wadah, untukModal) {
     "</div>" +
     tombolSimpanResep(resep, untukModal === true) +
     tombolMenujuPasar(resep, untukModal === true) +
+    bagianVideoResep(resep, untukModal === true) +
     bagianDaftar("🧅 BAHAN UTAMA", resep.bahan || resep.bahanUtama || [], "judul-bagian", false) +
     bagianDaftar("🌶️ BUMBU-BUMBU", resep.bumbu || [], "judul-bagian judul-bagian-merah", false) +
     bagianDaftar("🍳 ALAT MASAK", resep.alat_masak || resep.alat || [], "judul-bagian judul-bagian-biru", true) +
     bagianLangkah(resep) +
     bagianTips(resep);
+
+  // Pasang pemutar video cara memasak (halaman detail biasa / modal Shorts).
+  pasangVideoResep(resep, wadah, untukModal === true);
 
   // pasang aksi tombol simpan (status tersimpan/tidak sesuai localStorage)
   const idSimpan = untukModal === true ? "#tombol-simpan-resep-modal" : "#tombol-simpan-resep";
@@ -363,6 +385,133 @@ function tombolMenujuPasar(resep, untukModal) {
     "🛒 BAWA KE PASAR (Daftar Belanja)" +
     "</button>"
   );
+}
+
+/* ---------------------------------------------------------
+   VIDEO CARA MEMASAK DI HALAMAN RESEP
+   Setiap ibu membuka resep, video cara memasak langsung
+   tampil. Kalau resep punya 2 video, tersedia tombol besar
+   untuk memilih video ke-1 atau ke-2.
+   --------------------------------------------------------- */
+function bagianVideoResep(resep, untukModal) {
+  const daftar = resep.video_tutorial || [];
+  const nomor = untukModal === true ? 1 : 0; // halaman detail & modal pilih video berbeda
+  if (daftar.length === 0) return "";
+  const tautan = amanTeks(daftar[nomor % daftar.length]);
+
+  // Tombol besar untuk setiap pilihan video (tiap resep minimal 2 video).
+  let tombolPilih = "";
+  if (daftar.length > 1) {
+    let isiTombol = "";
+    daftar.forEach(function (_, i) {
+      isiTombol +=
+        '<button class="tombol-video-pilih' + (i === nomor % daftar.length ? " aktif" : "") +
+        '" type="button" data-video-nomor="' + i + '">▶️ VIDEO ' + (i + 1) + "</button>";
+    });
+    tombolPilih =
+      '<div class="video-resep-pilih">' + isiTombol + "</div>" +
+      '<p class="video-resep-catatan">Setiap resep punya minimal 2 video. ' +
+        "Kalau satu video tersendat, tekan tombol video lain ya, Bu.</p>";
+  }
+
+  return (
+    '<h3 class="judul-bagian video-resep-judul">🎬 VIDEO CARA MEMASAK (' +
+      daftar.length + " video)</h3>" +
+    '<video class="video-resep" controls playsinline webkit-playsinline ' +
+      'preload="metadata" poster="' + amanTeks(resep.gambar_masakan || resep.gambar) + '" ' +
+      'src="' + tautan + '" aria-label="Video cara memasak ' + amanTeks(resep.nama) + '"></video>' +
+    '<p class="video-resep-pesan" hidden></p>' +
+    tombolPilih
+  );
+}
+
+function pasangVideoResep(resep, wadah, untukModal) {
+  const daftar = resep.video_tutorial || [];
+  const nomorAwal = untukModal === true ? 1 : 0;
+  const pesanGagal = "⚠️ Video belum bisa diputar (internet lambat atau video sedang sibuk). " +
+    "Bahan dan cara memasak tetap bisa dibaca ya, Bu.";
+
+  // Susun daftar kandidat elemen video: yang ada di dalam wadah dulu,
+  // lalu elemen cadangan #video-resep di halaman.
+  const kandidat = [];
+  const diWadah = wadah && wadah.querySelector ? wadah.querySelector("video.video-resep") : null;
+  if (diWadah) kandidat.push(diWadah);
+  const cadangan = document.getElementById("video-resep");
+  if (cadangan && cadangan !== diWadah) kandidat.push(cadangan);
+
+  const pesanCadangan = document.getElementById("video-resep-pesan");
+  let sudahTerpasang = false;
+
+  kandidat.forEach(function (video) {
+    const pesan = (video.parentNode && video.parentNode.querySelector)
+      ? video.parentNode.querySelector(".video-resep-pesan")
+      : pesanCadangan;
+
+    const tampilkanPesan = function () {
+      if (pesan) { pesan.hidden = false; pesan.textContent = pesanGagal; }
+    };
+    const sembunyikanPesan = function () {
+      if (pesan) { pesan.hidden = true; pesan.textContent = ""; }
+    };
+
+    if (video.addEventListener && !video._videoResepSiap) {
+      video._videoResepSiap = true;
+      video.addEventListener("error", tampilkanPesan);
+      video.addEventListener("playing", sembunyikanPesan);
+      video.addEventListener("loadeddata", sembunyikanPesan);
+    }
+
+    if (daftar.length === 0) {
+      // Tanpa tautan video: kosongkan pemutar yang tidak dipakai.
+      if (video.pause) video.pause();
+      if (video.removeAttribute) video.removeAttribute("src");
+      if (video.load) video.load();
+      video.hidden = true;
+      if (pesan) pesan.hidden = true;
+      return;
+    }
+
+    // Jangan pakai autoplay di halaman detail: video baru berputar setelah
+    // ibu menekan tombol putar (lebih hemat kuota & tidak mengagetkan).
+    if (video.pause) video.pause();
+    if (video.setAttribute) video.setAttribute("src", amanTeks(daftar[nomorAwal % daftar.length]));
+    if (video.load) video.load();
+    video.hidden = false;
+    sembunyikanPesan();
+    sudahTerpasang = true;
+
+    // Tombol besar untuk berpindah video (VIDEO 1 / VIDEO 2).
+    const tombolSemua = wadah && wadah.querySelectorAll ? wadah.querySelectorAll(".tombol-video-pilih") : [];
+    Array.prototype.forEach.call(tombolSemua, function (tombol) {
+      tombol.addEventListener("click", function () {
+        const nomor = Number(tombol.dataset.videoNomor) || 0;
+        Array.prototype.forEach.call(tombolSemua, function (lain) {
+          lain.classList.remove("aktif");
+        });
+        tombol.classList.add("aktif");
+        sembunyikanPesan();
+        if (video.pause) video.pause();
+        video.setAttribute("src", amanTeks(daftar[nomor % daftar.length]));
+        if (video.load) video.load();
+      });
+    });
+  });
+
+  if (!sudahTerpasang) return;
+
+  const utama = diWadah || cadangan;
+  if (utama) {
+    if (untukModal === true) videoModalAktif = utama;
+    else videoResepAktif = utama;
+    lebihiKeHalamanShorts(untukModal, utama); // hentikan video lain (tidak ada dua suara)
+  }
+}
+
+function lebihiKeHalamanShorts(untukModal, aktifBaru) {
+  // Menghentikan video lain yang tidak lagi terlihat supaya tidak ada
+  // dua video bersuara bersamaan.
+  const lain = untukModal === true ? videoResepAktif : videoModalAktif;
+  if (lain && lain !== aktifBaru && lain.pause) lain.pause();
 }
 
 function bagianDaftar(judul, daftar, kelasJudul, hanyaNama) {
@@ -1292,6 +1441,8 @@ function tutupModalShorts() {
   const modal = document.getElementById("shorts-modal");
   const isi = document.getElementById("isi-resep-modal");
   if (modal) modal.hidden = true;
+  if (videoModalAktif && videoModalAktif.pause) videoModalAktif.pause();
+  videoModalAktif = null;
   if (isi) isi.innerHTML = "";
   aplikasi.modePasar = false;
   if (itemAktifShorts) pasangVideoItemShorts(itemAktifShorts); // video lanjut diputar
