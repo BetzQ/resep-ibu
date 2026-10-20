@@ -23,6 +23,10 @@ const aplikasi = {
   batasTampil: JUMLAH_KARTU_AWAL
 };
 
+// Titik berhenti menggulir daftar resep — disimpan agar saat kembali
+// dari halaman resep, ibu tidak perlu menggulir dari awal lagi.
+let posisiDaftar = 0;
+
 /* ---------------------------------------------------------
    1. MULAI APLIKASI
    --------------------------------------------------------- */
@@ -82,8 +86,26 @@ function pasangTombolUtama() {
   // Tombol "tampilkan lebih banyak" (render bertahap supaya tidak lag)
   document.getElementById("tombol-muat-lebih").addEventListener("click", function () {
     aplikasi.batasTampil += JUMLAH_TAMBAHAN;
-    gambarDaftarResep();
+    gambarDaftarResep(true); // cukup menyambung kartu baru — tidak render ulang
   });
+
+  // Tombol "ke atas" mengambang — muncul setelah menggulir jauh di daftar resep
+  const tombolKeAtas = document.getElementById("tombol-ke-atas");
+  if (tombolKeAtas) {
+    window.addEventListener("scroll", function () {
+      const masihDiDaftar = aplikasi.resepAktif === null && !aplikasi.modePasar;
+      tombolKeAtas.hidden = !(masihDiDaftar && window.scrollY > 800);
+    }, { passive: true });
+    tombolKeAtas.addEventListener("click", function () {
+      const kurangGerak = window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: kurangGerak ? "auto" : "smooth" });
+    });
+  }
+
+  // Biar browser tidak menggeser posisi gulir sendiri saat tombol
+  // kembali/forward ditekan — posisi daftar dikembalikan secara manual.
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
   // Perubahan alamat (tombol "kembali" browser)
   window.addEventListener("hashchange", muatDariAlamat);
@@ -111,7 +133,7 @@ function resepTersaring() {
   });
 }
 
-function gambarDaftarResep() {
+function gambarDaftarResep(tambahSaja) {
   const wadah = document.getElementById("daftar-resep");
   const tombolMuat = document.getElementById("tombol-muat-lebih");
   const daftar = resepTersaring();
@@ -128,12 +150,23 @@ function gambarDaftarResep() {
   tombolMuat.hidden = sisa <= 0;
   tombolMuat.textContent = "📜 TAMPILKAN LEBIH BANYAK (sisa " + sisa + " resep)";
 
-  wadah.innerHTML = "";
+  // Saat tombol "tampilkan lebih banyak" ditekan, kartu lama dibiarkan
+  // dan hanya kartu baru ditambahkan — layar HP tidak kedip/kelambatan.
+  const tanda = aplikasi.kategoriAktif + "|" + aplikasi.kataCari;
+  const menyambung =
+    tambahSaja === true &&
+    wadah.dataset.tanda === tanda &&
+    wadah.children.length > 0 &&
+    wadah.children.length < tampil;
+
+  if (!menyambung) wadah.innerHTML = "";
+  const mulaiDari = menyambung ? wadah.children.length : 0;
   const frag = document.createDocumentFragment();
-  for (let nomor = 0; nomor < tampil; nomor++) {
+  for (let nomor = mulaiDari; nomor < tampil; nomor++) {
     frag.appendChild(buatKartuResep(daftar[nomor]));
   }
   wadah.appendChild(frag);
+  wadah.dataset.tanda = tanda;
 }
 
 function buatKartuResep(resep) {
@@ -169,11 +202,14 @@ function muatDariAlamat() {
 }
 
 function tampilkanDaftar() {
+  // Kalau datang dari halaman resep/pasar, kembalikan posisi gulir lama.
+  // Kalau baru dibuka (awal muat halaman), mulai dari paling atas.
+  const dariHalamanResep = aplikasi.resepAktif !== null || aplikasi.modePasar;
   aplikasi.modePasar = false;
   aplikasi.resepAktif = null;
   document.getElementById("halaman-resep").hidden = true;
   document.getElementById("halaman-daftar").hidden = false;
-  window.scrollTo(0, 0);
+  window.scrollTo(0, dariHalamanResep ? posisiDaftar : 0);
   document.title = "Buku Resep Ibu-Ibu — Resep Masakan Lengkap";
 }
 
@@ -186,6 +222,7 @@ function bukaResep(id) {
     keDaftarResep();
     return;
   }
+  if (!aplikasi.resepAktif) posisiDaftar = window.scrollY; // ingat posisi di daftar
   aplikasi.resepAktif = resep;
   aplikasi.modePasar = false;
   document.getElementById("halaman-daftar").hidden = true;

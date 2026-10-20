@@ -121,9 +121,10 @@ body {
 }
 
 /* ---------- KARTU RESEP ---------- */
+/* min(300px, 100%) supaya di HP kecil (320px) tidak ada gulir samping */
 .grid-resep {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
   gap: 24px;
 }
 .kartu-resep {
@@ -257,6 +258,36 @@ body {
 .tombol-muat-lebih:focus-visible { outline: 5px solid #f59e0b; outline-offset: 3px; }
 .tombol-muat-lebih[hidden] { display: none; }
 
+/* ---------- TOMBOL KE ATAS (MENGAMBANG — KHUSUS LAYAR HP/TABLET) ---------- */
+.tombol-ke-atas {
+  position: fixed;
+  right: 14px;
+  bottom: 18px;
+  /* HP lama yang belum mengenal safe-area tetap memakai nilai di atas */
+  right: calc(14px + env(safe-area-inset-right, 0px));
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 4px solid var(--warna-hijau-tua);
+  background: var(--warna-hijau);
+  color: #ffffff;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+  display: none; /* di layar lebar (komputer) tidak ditampilkan */
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+.tombol-ke-atas:focus-visible { outline: 5px solid #f59e0b; outline-offset: 3px; }
+@media (max-width: 1024px) {
+  .tombol-ke-atas:not([hidden]) { display: flex; }
+}
+
 /* ---------- DETAIL RESEP ---------- */
 .foto-resep {
   width: 100%;
@@ -316,7 +347,7 @@ body {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: 12px;
 }
 .item-baris {
@@ -502,6 +533,8 @@ body {
   gap: 20px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;   /* gulir mulus di iPhone lama */
+  overscroll-behavior-x: contain;       /* jangan "menular" ke gulir halaman */
   padding: 4px 4px 14px 4px;
 }
 .kartu-scroll::-webkit-scrollbar { height: 18px; }
@@ -627,14 +660,112 @@ body {
   margin: 0 0 26px 0;
 }
 
-/* ---------- LAYAR KECIL (HP) ---------- */
-@media (max-width: 640px) {
-  html { font-size: 19px; }
-  .text-judul { font-size: 28px; }
-  .judul-resep { font-size: 28px; }
-  .judul-bagian { font-size: 25px; }
-  .tombol-kembali, .tombol-pasar { font-size: 23px; }
-  .langkah-baris { gap: 12px; padding: 14px; font-size: 21px; }
-  .nomor-langkah { width: 52px; height: 52px; font-size: 27px; }
-  .jumlah-item { white-space: normal; }
+/* =========================================================
+   LAYAR HP — disiapkan khusus untuk mata lansia:
+   huruf TIDAK diperkecil, tombol lebih tinggi dan mudah
+   diketuk, satu kolom penuh, dan tombol kembali menempel
+   di atas layar supaya tidak perlu menggulir jauh.
+   ========================================================= */
+@media (max-width: 700px) {
+  html { font-size: 20px; } /* jangan diperkecil — mata lansia butuh huruf besar */
+  body { line-height: 1.75; }
+
+  /* Bagian atas lebih ringkas supaya cepat masuk ke isi */
+  .header-besar { padding: 16px 14px; border-bottom-width: 6px; }
+  .text-judul { font-size: 30px; letter-spacing: 0.5px; }
+  .text-subjudul { font-size: 20px; margin-top: 4px; }
+  .konten-utama { padding: 16px 14px 54px 14px; }
+
+  /* Pencarian: kotak lega, huruf besar (24px juga mencegah HP
+     otomatis memperbesar layar saat kotak disentuh) */
+  .kotak-pencarian { padding: 16px; margin-bottom: 14px; }
+  .label-cari { font-size: 22px; margin-bottom: 8px; }
+  .input-cari { font-size: 24px; padding: 18px 14px; }
+
+  /* Tombol kategori: satu tombol satu baris — jari tidak mudah salah ketuk */
+  .baris-tombol-filter { gap: 10px; margin-bottom: 8px; }
+  .tombol-filter {
+    flex: 1 1 100%;
+    min-height: 64px;
+    font-size: 22px;
+    padding: 14px 16px;
+    border-radius: 16px;
+  }
+
+  .teks-kecil-abu { font-size: 19px; margin: 6px 0 14px 0; }
+
+  /* Daftar resep: satu kolom penuh, gambar tetap besar */
+  .grid-resep { grid-template-columns: 1fr; gap: 18px; }
+  .kartu-gambar { height: 210px; }
+  .kartu-isi { padding: 16px 16px 20px 16px; }
+  .kartu-judul { font-size: 27px; }
+  .kartu-asal { font-size: 20px; }
+  .kartu-info { font-size: 20px; padding: 10px 14px; }
+
+  /* Semua tombol besar: TIDAK diperkecil di HP */
+  .tombol-kembali { font-size: 25px; padding: 18px; margin: 14px 0; }
+  .tombol-pasar { font-size: 27px; padding: 22px 16px; }
+  .tombol-merah, .tombol-netral { font-size: 24px; padding: 18px 16px; }
+  .tombol-muat-lebih { font-size: 25px; padding: 22px 14px; margin: 20px 0; }
+
+  /* Detail resep: foto tidak menutupi seluruh layar awal */
+  .foto-resep { max-height: 300px; border-width: 3px; }
+  .judul-resep { font-size: 30px; }
+  .asal-resep { font-size: 21px; }
+  .deskripsi-resep { font-size: 21px; padding: 14px 16px; }
+  .kotak-info { font-size: 20px; padding: 10px 14px; }
+  .judul-bagian { font-size: 26px; margin-top: 28px; }
+
+  /* Bahan/bumbu/alat: nama panjang dan jumlah tetap rapi */
+  .daftar-item { grid-template-columns: 1fr; gap: 10px; }
+  .item-baris { padding: 14px; font-size: 22px; gap: 12px; flex-wrap: wrap; }
+  .jumlah-item { margin-left: auto; white-space: normal; }
+
+  /* Langkah memasak: nomor besar, teks lapang */
+  .langkah-baris { gap: 14px; padding: 16px 14px; font-size: 22px; margin-bottom: 12px; }
+  .nomor-langkah { width: 56px; height: 56px; font-size: 28px; }
+
+  /* Mode pasar: kotak centang besar, nyaman disentuh */
+  .baris-belanja { padding: 16px 14px; font-size: 23px; gap: 14px; }
+  .baris-belanja .kotak-centang { width: 46px; height: 46px; }
+  .jenis-bahan { font-size: 16px; padding: 4px 10px; }
+
+  /* Resep viral: satu kartu hampir selebar layar + sedikit kartu berikutnya
+     sebagai penanda masih ada isi lain */
+  .bagian-viral { padding: 16px 14px; }
+  .judul-viral { font-size: 27px; }
+  .kartu-scroll { gap: 14px; scroll-padding: 4px; }
+  .kartu-viral { flex: 0 0 86%; max-width: 420px; }
+  .gambar-viral { height: 240px; }
+  .isi-viral { padding: 12px; }
+  .judul-viral-kartu { font-size: 23px; }
+  .tombol-viral { font-size: 21px; padding: 14px; min-height: 56px; }
+  .tombol-gulir { gap: 12px; }
+  .tombol-gulir-kotak { width: 84px; height: 64px; font-size: 30px; }
+
+  /* Sentuhan lebih responsif: hilangkan jeda 300ms & zoom ganda di HP */
+  button, input, label, a { touch-action: manipulation; }
+
+  /* Tombol "KEMBALI KE DAFTAR" menempel penuh di atas layar —
+     resep panjang pun bisa langsung kembali tanpa menggulir jauh */
+  #tombol-kembali-atas {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    margin: 0 -14px 14px -14px;
+    width: auto;
+    border-radius: 0;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+  }
+}
+
+/* ---------- HP DIBARINGKAN (LANDSCAPE) — ruang tinggi sempit ---------- */
+@media (max-width: 900px) and (orientation: landscape) {
+  .header-besar { padding: 10px 14px; }
+  .text-judul { font-size: 24px; }
+  .text-subjudul { display: none; }
+  .konten-utama { padding-top: 12px; }
+  .kartu-gambar { height: 170px; }
+  .foto-resep { max-height: 40vh; }
+  #tombol-kembali-atas { font-size: 21px; padding: 12px 14px; }
 }
