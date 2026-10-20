@@ -11,13 +11,22 @@
 
 const KUNCI_LOKAL = "pasar_v1_"; // awalan nama penyimpanan di browser
 const KUNCI_FAVORIT = "favorit_v1_daftar"; // daftar resep tersimpan (bookmark) di browser
+const KUNCI_FYP = "fyp_v1_skor"; // skor selera ibu per daerah/negara (algoritma rekomendasi)
 
 const JUMLAH_KARTU_AWAL = 24; // kartu dirender bertahap supaya HP lansia tetap lancar
 const JUMLAH_TAMBAHAN = 24;
 
+const LAMA_LIHAT_SHORTS = 3000; // 3 detik menonton = dihitung 1 poin selera
+const BAGIAN_PRIORITAS = 7; // 7 dari 10 video = sesuai selera (70%)
+const BAGIAN_PENYEGAR = 3; // 3 dari 10 video = daerah/negara acak (30% penyegaran)
+
 // Resep yang ditandai ibu sebagai favorit (hanya id resep makanan —
 // bahan/bumbu/checklist pasar TIDAK ikut disimpan di sini).
 let daftarFavorit = new Set();
+
+// Skor selera ibu: { "Padang": 5, "Jepang": 2, ... } — dipakai Mode Shorts
+// untuk mengurutkan video yang paling mungkin disukai.
+let skorFyp = {};
 
 const aplikasi = {
   semuaResep: [],
@@ -32,6 +41,17 @@ const aplikasi = {
 // dari halaman resep, ibu tidak perlu menggulir dari awal lagi.
 let posisiDaftar = 0;
 
+// Keadaan Mode Shorts (video otomatis)
+let shortsTerbuka = false; // sedang di Mode Shorts?
+let posisiShorts = 0; // posisi gulir daftar sebelum masuk Mode Shorts
+let antreanShorts = []; // urutan resep yang tampil sebagai video
+let suaraShortsNyala = false; // video mulai dalam keadaan bisu
+let pengamatShorts = null; // pemantau video mana yang sedang tampil
+let itemAktifShorts = null; // video yang sedang dilihat
+let jedaLihatShorts = null; // penghitung 3 detik
+let sudahDihitungShorts = new Set(); // biar satu video tidak dihitung dua kali
+let jedaCariShorts = null;
+
 /* ---------------------------------------------------------
    1. MULAI APLIKASI
    --------------------------------------------------------- */
@@ -45,6 +65,7 @@ async function mulai() {
     const data = await jawaban.json();
     aplikasi.semuaResep = data.resep;
     muatFavorit(); // resep tersimpan (bookmark) dari localStorage
+    muatSkorFyp(); // skor selera ibu (algoritma rekomendasi Mode Shorts)
     perbaruiHitungFavorit();
     gambarDaftarResep();
     muatDariAlamat(); // kalau dibuka langsung lewat tautan resep
@@ -109,6 +130,8 @@ function pasangTombolUtama() {
       window.scrollTo({ top: 0, behavior: kurangGerak ? "auto" : "smooth" });
     });
   }
+
+  pasangTombolShorts(); // pintu masuk + kendali Mode Shorts
 
   // Biar browser tidak menggeser posisi gulir sendiri saat tombol
   // kembali/forward ditekan — posisi daftar dikembalikan secara manual.
@@ -234,6 +257,10 @@ function keDaftarResep() {
 
 function muatDariAlamat() {
   const alamat = window.location.hash || "#/";
+  if (alamat === "#/shorts") {
+    bukaModeShorts();
+    return;
+  }
   const cocok = alamat.match(/^#\/resep\/([\w-]+)/);
   if (cocok) {
     bukaResep(cocok[1]);
@@ -246,11 +273,13 @@ function tampilkanDaftar() {
   // Kalau datang dari halaman resep/pasar, kembalikan posisi gulir lama.
   // Kalau baru dibuka (awal muat halaman), mulai dari paling atas.
   const dariHalamanResep = aplikasi.resepAktif !== null || aplikasi.modePasar;
+  const dariShorts = shortsTerbuka;
   aplikasi.modePasar = false;
   aplikasi.resepAktif = null;
+  if (dariShorts) matikanShorts(); // hentikan video + lepas pemantau dsb.
   document.getElementById("halaman-resep").hidden = true;
   document.getElementById("halaman-daftar").hidden = false;
-  window.scrollTo(0, dariHalamanResep ? posisiDaftar : 0);
+  window.scrollTo(0, dariShorts ? posisiShorts : (dariHalamanResep ? posisiDaftar : 0));
   document.title = "Buku Resep Ibu-Ibu — Resep Masakan Lengkap";
 }
 
@@ -264,6 +293,7 @@ function bukaResep(id) {
     return;
   }
   if (!aplikasi.resepAktif) posisiDaftar = window.scrollY; // ingat posisi di daftar
+  catatSkorFyp(resep); // membuka detail = minat ibu naik (+1 poin selera)
   aplikasi.resepAktif = resep;
   aplikasi.modePasar = false;
   document.getElementById("halaman-daftar").hidden = true;
@@ -273,8 +303,11 @@ function bukaResep(id) {
   document.title = resep.nama + " — Buku Resep Ibu-Ibu";
 }
 
-function gambarDetailResep(resep) {
-  document.getElementById("isi-resep").innerHTML =
+function gambarDetailResep(resep, wadah, untukModal) {
+  // wadah bisa diisi supaya resep yang sama bisa muncul di halaman detail
+  // maupun di dalam modal Mode Shorts.
+  wadah = wadah || document.getElementById("isi-resep");
+  wadah.innerHTML =
     '<img class="foto-resep" src="' + amanTeks(resep.gambar_masakan || resep.gambar) + '" alt="' + amanTeks(resep.nama) + '" decoding="async" onerror="gagalGambar(this)" />' +
     '<h2 class="judul-resep">' + resep.ikon + " " + amanTeks(resep.nama) + "</h2>" +
     '<p class="asal-resep">📍 ' + amanTeks(resep.daerah) + "</p>" +
@@ -284,8 +317,8 @@ function gambarDetailResep(resep) {
       '<span class="kotak-info">👨‍👩‍👧 Porsi: ' + amanTeks(resep.porsi) + "</span>" +
       '<span class="kotak-info">🎯 Tingkat: ' + amanTeks(resep.tingkat) + "</span>" +
     "</div>" +
-    tombolSimpanResep(resep) +
-    tombolMenujuPasar(resep) +
+    tombolSimpanResep(resep, untukModal === true) +
+    tombolMenujuPasar(resep, untukModal === true) +
     bagianDaftar("🧅 BAHAN UTAMA", resep.bahan || resep.bahanUtama || [], "judul-bagian", false) +
     bagianDaftar("🌶️ BUMBU-BUMBU", resep.bumbu || [], "judul-bagian judul-bagian-merah", false) +
     bagianDaftar("🍳 ALAT MASAK", resep.alat_masak || resep.alat || [], "judul-bagian judul-bagian-biru", true) +
@@ -293,24 +326,40 @@ function gambarDetailResep(resep) {
     bagianTips(resep);
 
   // pasang aksi tombol simpan (status tersimpan/tidak sesuai localStorage)
-  const tombolSimpan = document.getElementById("tombol-simpan-resep");
+  const idSimpan = untukModal === true ? "#tombol-simpan-resep-modal" : "#tombol-simpan-resep";
+  let tombolSimpan = wadah.querySelector ? wadah.querySelector(idSimpan) : null;
+  if (!tombolSimpan) tombolSimpan = document.getElementById(idSimpan.slice(1));
   if (tombolSimpan) pasangTombolFavorit(tombolSimpan, resep);
+
+  // tombol "Bawa ke Pasar" khusus modal (di halaman biasa dipasang lewat
+  // pendengar dokumen supaya tetap bisa dipakai di mana saja)
+  if (untukModal === true) {
+    const tombolPasar = wadah.querySelector ? wadah.querySelector("#tombol-pasar-modal") : null;
+    if (tombolPasar) {
+      tombolPasar.addEventListener("click", function () {
+        bukaModePasar(resep, wadah, true);
+      });
+    }
+  }
 }
 
 // Tombol simpan resep (favorit) di halaman detail — hanya id resep makanan
 // yang disimpan, bumbu dan checklist pasar tidak ikut.
-function tombolSimpanResep(resep) {
+function tombolSimpanResep(resep, untukModal) {
   return (
-    '<button class="tombol-simpan" type="button" id="tombol-simpan-resep" ' +
-    'data-favorit="' + amanTeks(resep.id) + '" aria-pressed="false">' +
+    '<button class="tombol-simpan" type="button" id="' +
+    (untukModal === true ? "tombol-simpan-resep-modal" : "tombol-simpan-resep") +
+    '" data-favorit="' + amanTeks(resep.id) + '" aria-pressed="false">' +
     "⭐ SIMPAN RESEP INI" +
     "</button>"
   );
 }
 
-function tombolMenujuPasar(resep) {
+function tombolMenujuPasar(resep, untukModal) {
+  // Id berbeda untuk modal supaya tidak bentrok dengan pendengar di halaman biasa.
   return (
-    '<button class="tombol-pasar" type="button" id="tombol-pasar">' +
+    '<button class="tombol-pasar" type="button" id="' +
+    (untukModal === true ? "tombol-pasar-modal" : "tombol-pasar") + '">' +
     "🛒 BAWA KE PASAR (Daftar Belanja)" +
     "</button>"
   );
@@ -413,9 +462,9 @@ function simpanCentangan(idResep, data) {
   }
 }
 
-function bukaModePasar(resep) {
+function bukaModePasar(resep, wadah, untukModal) {
   aplikasi.modePasar = true;
-  const wadah = document.getElementById("isi-resep");
+  wadah = wadah || document.getElementById("isi-resep");
   const baris = semuaBarisBeli(resep);
   const centang = bacaCentangan(resep.id);
 
@@ -451,12 +500,12 @@ function bukaModePasar(resep) {
     barisEl.addEventListener("click", function (peristiwa) {
       // biarkan label/klik apa pun di baris tetap memutar centang dengan normal
       setTimeout(function () {
-        perbaruiStatusBaris(resep.id, barisEl);
+        perbaruiStatusBaris(wadah, resep.id, barisEl);
       }, 0);
     });
     const kotak = barisEl.querySelector(".kotak-centang");
     kotak.addEventListener("change", function () {
-      perbaruiStatusBaris(resep.id, barisEl);
+      perbaruiStatusBaris(wadah, resep.id, barisEl);
     });
   });
 
@@ -464,44 +513,46 @@ function bukaModePasar(resep) {
     const semua = {};
     baris.forEach(function (item) { semua[item.kunci] = true; });
     simpanCentangan(resep.id, semua);
-    bukaModePasar(resep);
+    bukaModePasar(resep, wadah, untukModal);
   });
 
   wadah.querySelector("#tombol-kosongkan").addEventListener("click", function () {
     if (confirm("Yakin ingin mengosongkan semua centangan belanja?")) {
       simpanCentangan(resep.id, {});
-      bukaModePasar(resep);
+      bukaModePasar(resep, wadah, untukModal);
     }
   });
 
   [ "#tombol-kembali-resep", "#tombol-kembali-resep-2" ].forEach(function (idTombol) {
     wadah.querySelector(idTombol).addEventListener("click", function () {
       aplikasi.modePasar = false;
-      gambarDetailResep(resep);
+      gambarDetailResep(resep, wadah, untukModal);
     });
   });
 
-  perbaruiProgres();
-  window.scrollTo(0, 0);
+  perbaruiProgres(wadah);
+  if (untukModal !== true) window.scrollTo(0, 0);
 }
 
-function perbaruiStatusBaris(idResep, barisEl) {
+function perbaruiStatusBaris(wadah, idResep, barisEl) {
   const kotak = barisEl.querySelector(".kotak-centang");
   const centang = bacaCentangan(idResep);
   centang[barisEl.dataset.kunci] = kotak.checked;
   simpanCentangan(idResep, centang);
   barisEl.classList.toggle("sudah-dibeli", kotak.checked);
-  perbaruiProgres();
+  perbaruiProgres(wadah);
 }
 
-function perbaruiProgres() {
+function perbaruiProgres(wadah) {
   const resep = aplikasi.resepAktif;
   if (!resep) return;
-  const kotak = document.querySelectorAll("#isi-resep .kotak-centang");
+  wadah = wadah || document.getElementById("isi-resep");
+  if (!wadah) return;
+  const kotak = wadah.querySelectorAll(".kotak-centang");
   if (kotak.length === 0) return;
-  const sudah = document.querySelectorAll("#isi-resep .kotak-centang:checked").length;
+  const sudah = wadah.querySelectorAll(".kotak-centang:checked").length;
   const total = kotak.length;
-  const teks = document.getElementById("teks-progres");
+  const teks = wadah.querySelector("#teks-progres") || document.getElementById("teks-progres");
   if (!teks) return;
   teks.textContent = sudah + " dari " + total + " barang sudah dibeli";
 }
@@ -709,6 +760,16 @@ function perbaruiHitungFavorit() {
 
 // Menyesuaikan tampilan tombol simpan: masih kosong (☆) atau sudah terisi (★).
 function aturTampilFavorit(tombol, tersimpan) {
+  if (tombol.classList.contains("shorts-bookmark")) {
+    // tombol khusus Mode Shorts: ikon + tulisan besar (ramah lansia)
+    if (tersimpan) tombol.classList.add("aktif");
+    else tombol.classList.remove("aktif");
+    tombol.setAttribute("aria-pressed", tersimpan ? "true" : "false");
+    tombol.innerHTML = tersimpan
+      ? '<span class="shorts-aksi-ikon" aria-hidden="true">⭐</span><span class="shorts-aksi-teks">TERSIMPAN</span>'
+      : '<span class="shorts-aksi-ikon" aria-hidden="true">☆</span><span class="shorts-aksi-teks">SIMPAN</span>';
+    return;
+  }
   const tombolBesar = tombol.classList.contains("tombol-simpan"); // tombol di halaman detail
   if (tersimpan) tombol.classList.add("aktif");
   else tombol.classList.remove("aktif");
@@ -744,6 +805,496 @@ function tekanFavorit(resep) {
 
   // kalau sedang membuka daftar "⭐ Tersimpan", daftar ikut diperbarui
   if (aplikasi.kategoriAktif === "tersimpan") gambarDaftarResep();
+}
+
+/* ---------------------------------------------------------
+   4D. ALGORITMA "FYP" — SELERA IBU DI SIMPAN DI LOCALSTORAGE
+   Setiap video ditonton >3 detik atau resepnya dibuka,
+   skor daerah/negara naik +1. Feed Shorts 70% mengikuti
+   selera, 30% daerah/negara acak sebagai penyegaran.
+   --------------------------------------------------------- */
+function muatSkorFyp() {
+  try {
+    const teks = localStorage.getItem(KUNCI_FYP);
+    const isi = teks ? JSON.parse(teks) : {};
+    const bersih = {};
+    if (isi && typeof isi === "object" && !Array.isArray(isi)) {
+      Object.keys(isi).forEach(function (kunci) {
+        const nilai = Number(isi[kunci]);
+        if (kunci && nilai > 0) bersih[kunci] = nilai;
+      });
+    }
+    skorFyp = bersih;
+  } catch (e) {
+    skorFyp = {};
+  }
+}
+
+function simpanSkorFyp() {
+  try {
+    localStorage.setItem(KUNCI_FYP, JSON.stringify(skorFyp));
+  } catch (e) {
+    console.error("Penyimpanan browser penuh atau diblokir.", e);
+  }
+}
+
+// Kunci selera: Nusantara memakai daerah asal (mis. "Padang"),
+// masakan dunia memakai negara (mis. "Jepang").
+function kunciFyp(resep) {
+  const asal = String(resep.daerah || "").split("—")[0].split("–")[0].trim();
+  if (resep.kategori === "dunia") return asal || "Dunia";
+  return asal || "Nusantara";
+}
+
+// Menambah 1 poin selera untuk daerah/negara masakan ini.
+function catatSkorFyp(resep) {
+  if (!resep) return;
+  const kunci = kunciFyp(resep);
+  if (!kunci) return;
+  skorFyp[kunci] = (Number(skorFyp[kunci]) || 0) + 1;
+  simpanSkorFyp();
+}
+
+// Mengacak daftar (Fisher–Yates) tanpa mengubah daftar aslinya.
+function acakDaftar(daftar) {
+  const salinan = daftar.slice();
+  for (let i = salinan.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tukar = salinan[i];
+    salinan[i] = salinan[j];
+    salinan[j] = tukar;
+  }
+  return salinan;
+}
+
+// Menyusun antrean video: 70% daerah/negara favorit, 30% penyegar acak.
+function bangunAntreanShorts() {
+  const semua = aplikasi.semuaResep.filter(function (r) {
+    return (r.video_tutorial && r.video_tutorial.length > 0) &&
+      (r.gambar_masakan || r.gambar);
+  });
+
+  const kunciTerurut = Object.keys(skorFyp)
+    .filter(function (kunci) { return Number(skorFyp[kunci]) > 0; })
+    .sort(function (a, b) { return Number(skorFyp[b]) - Number(skorFyp[a]); });
+
+  // Belum ada riwayat sama sekali: seluruh antrean diacak (semuanya penyegar).
+  if (kunciTerurut.length === 0) return acakDaftar(semua);
+
+  const kunciUtama = {};
+  kunciTerurut.forEach(function (kunci) { kunciUtama[kunci] = true; });
+
+  const prioritas = [];
+  kunciTerurut.forEach(function (kunci) {
+    acakDaftar(semua.filter(function (r) { return kunciFyp(r) === kunci; }))
+      .forEach(function (r) { prioritas.push(r); });
+  });
+  const penyegar = acakDaftar(semua.filter(function (r) {
+    return !kunciUtama[kunciFyp(r)];
+  }));
+
+  const antrean = [];
+  let iPrioritas = 0;
+  let iPenyegar = 0;
+  while (iPrioritas < prioritas.length || iPenyegar < penyegar.length) {
+    for (let i = 0; i < BAGIAN_PRIORITAS && iPrioritas < prioritas.length; i++) {
+      antrean.push(prioritas[iPrioritas]);
+      iPrioritas++;
+    }
+    for (let i = 0; i < BAGIAN_PENYEGAR && iPenyegar < penyegar.length; i++) {
+      antrean.push(penyegar[iPenyegar]);
+      iPenyegar++;
+    }
+    if (iPrioritas >= prioritas.length) {
+      while (iPenyegar < penyegar.length) { antrean.push(penyegar[iPenyegar]); iPenyegar++; }
+    }
+    if (iPenyegar >= penyegar.length) {
+      while (iPrioritas < prioritas.length) { antrean.push(prioritas[iPrioritas]); iPrioritas++; }
+    }
+  }
+  return antrean;
+}
+
+// Memilih 1 dari 2 tautan video_tutorial supaya variasi antar tayangan.
+function pilihVideoShorts(resep, nomor) {
+  const daftar = resep.video_tutorial || [];
+  if (daftar.length === 0) return "";
+  if (daftar.length === 1) return daftar[0];
+  return daftar[nomor % daftar.length];
+}
+
+/* ---------------------------------------------------------
+   4E. MODE SHORTS (VIDEO OTOMATIS PENUH LAYAR)
+   --------------------------------------------------------- */
+function pasangTombolShorts() {
+  const tombolMasuk = document.getElementById("tombol-shorts");
+  if (tombolMasuk) {
+    tombolMasuk.addEventListener("click", function () {
+      window.location.hash = "#/shorts";
+    });
+  }
+
+  const tombolKeluar = document.getElementById("shorts-keluar");
+  if (tombolKeluar) {
+    tombolKeluar.addEventListener("click", function () {
+      keDaftarResep();
+    });
+  }
+
+  const tombolSuara = document.getElementById("shorts-suara");
+  if (tombolSuara) {
+    tombolSuara.addEventListener("click", alihSuaraShorts);
+  }
+
+  // Catatan: tombol CARI dipasang per video di dalam buatItemShorts()
+  // karena setiap video punya tombolnya sendiri di sisi kanan layar.
+
+  const tombolCariTutup = document.getElementById("shorts-cari-tutup");
+  if (tombolCariTutup) {
+    tombolCariTutup.addEventListener("click", tutupKotakCariShorts);
+  }
+
+  const kotakCari = document.getElementById("shorts-cari");
+  if (kotakCari) {
+    kotakCari.addEventListener("input", function () {
+      clearTimeout(jedaCariShorts);
+      jedaCariShorts = setTimeout(function () {
+        saringShorts(kotakCari.value);
+      }, 250);
+    });
+  }
+
+  const tombolModalTutup = document.getElementById("shorts-modal-tutup");
+  if (tombolModalTutup) {
+    tombolModalTutup.addEventListener("click", tutupModalShorts);
+  }
+}
+
+function bukaModeShorts() {
+  const halaman = document.getElementById("halaman-shorts");
+  const feed = document.getElementById("shorts-feed");
+  if (!halaman || !feed) {
+    keDaftarResep();
+    return;
+  }
+  if (shortsTerbuka) return; // sudah terbuka, tidak perlu dipasang ulang
+
+  // Ingat posisi daftar supaya saat keluar tidak kembali ke paling atas.
+  posisiShorts = aplikasi.resepAktif ? 0 : window.scrollY;
+  shortsTerbuka = true;
+  sudahDihitungShorts = new Set();
+
+  document.getElementById("halaman-daftar").hidden = true;
+  document.getElementById("halaman-resep").hidden = true;
+  halaman.hidden = false;
+  document.body.classList.add("kunci-gerak-shorts");
+  document.title = "Mode Shorts — Buku Resep Ibu-Ibu";
+
+  gambarFeedShorts(bangunAntreanShorts());
+}
+
+// Melepas semua pemantau + menghentikan video (hemat baterai & kuota).
+function matikanShorts() {
+  if (!shortsTerbuka) return;
+  shortsTerbuka = false;
+  if (pengamatShorts) {
+    pengamatShorts.disconnect();
+    pengamatShorts = null;
+  }
+  clearTimeout(jedaLihatShorts);
+  jedaShortsHentikanVideo();
+  itemAktifShorts = null;
+  const feed = document.getElementById("shorts-feed");
+  if (feed) feed.innerHTML = "";
+  const halaman = document.getElementById("halaman-shorts");
+  if (halaman) halaman.hidden = true;
+  const modal = document.getElementById("shorts-modal");
+  if (modal) modal.hidden = true;
+  document.body.classList.remove("kunci-gerak-shorts");
+}
+
+function jedaShortsHentikanVideo() {
+  const feed = document.getElementById("shorts-feed");
+  if (!feed || !feed.querySelectorAll) return;
+  feed.querySelectorAll("video").forEach(function (video) {
+    if (video.pause) video.pause();
+  });
+}
+
+function pilihVideoTerpasang(video) {
+  if (!video || !video.play) return;
+  const janji = video.play();
+  if (janji && janji.catch) janji.catch(function () { /* autoplay ditolak browser */ });
+}
+
+function gambarFeedShorts(antrean) {
+  const feed = document.getElementById("shorts-feed");
+  if (!feed) return;
+  if (pengamatShorts) {
+    pengamatShorts.disconnect();
+    pengamatShorts = null;
+  }
+  clearTimeout(jedaLihatShorts);
+  itemAktifShorts = null;
+  antreanShorts = antrean;
+  feed.innerHTML = "";
+
+  const frag = document.createDocumentFragment();
+  antrean.forEach(function (resep, nomor) {
+    frag.appendChild(buatItemShorts(resep, nomor));
+  });
+  feed.appendChild(frag);
+  feed.scrollTop = 0;
+
+  perbaruiStatusShorts(antrean.length);
+  pasangPengamatShorts();
+}
+
+function perbaruiStatusShorts(jumlah) {
+  const status = document.getElementById("shorts-status");
+  const panduan = document.getElementById("shorts-panduan");
+  if (panduan) panduan.hidden = jumlah === 0;
+  if (!status) return;
+  if (jumlah === 0) {
+    status.hidden = false;
+    status.textContent = "😕 Tidak ada masakan yang cocok. Coba kata kunci lain ya, Bu.";
+    return;
+  }
+  status.hidden = true;
+  status.textContent = "";
+}
+
+// Menulis keterangan pencarian di Mode Shorts (jumlah hasil + contoh pertama).
+function tulisStatusCariShorts(kata, hasil) {
+  const status = document.getElementById("shorts-status");
+  if (!status) return;
+  if (hasil.length === 0) {
+    status.hidden = false;
+    status.textContent = "😕 Tidak ada masakan yang cocok dengan “" + kata + "”. Coba kata lain ya, Bu.";
+    return;
+  }
+  status.hidden = false;
+  status.textContent = "🔍 " + hasil.length + " masakan ditemukan untuk “" + kata +
+    "”. Video mulai dari " + hasil[0].nama + ".";
+}
+
+function buatItemShorts(resep, nomor) {
+  const item = document.createElement("div");
+  item.className = "shorts-item";
+  item.dataset.id = resep.id;
+  item.dataset.video = pilihVideoShorts(resep, nomor);
+  const gambar = amanTeks(resep.gambar_masakan || resep.gambar);
+
+  item.innerHTML =
+    // Video dipasang saat item mendekat layar (hemat kuota & memori HP).
+    '<video class="shorts-video" playsinline webkit-playsinline muted loop preload="none" ' +
+      'poster="' + gambar + '" aria-hidden="true"></video>' +
+    // Lapisan transparan penutup video: gesture geser jari selalu diteruskan
+    // ke kolom feed, tidak pernah tertahan pemutar video.
+    '<div class="shorts-overlay-geser" aria-hidden="true"></div>' +
+    '<div class="shorts-panel">' +
+      '<img class="shorts-thumb" src="' + gambar + '" alt="" loading="lazy" decoding="async" onerror="gagalGambar(this)" />' +
+      '<div class="shorts-teks">' +
+        '<p class="shorts-nama">' + resep.ikon + " " + amanTeks(resep.nama) + "</p>" +
+        '<p class="shorts-asal">📍 ' + amanTeks(resep.daerah) + " &nbsp;•&nbsp; ⏱️ " + resep.waktu + " menit</p>" +
+      "</div>" +
+    "</div>" +
+    '<div class="shorts-aksi">' +
+      '<button class="shorts-tombol shorts-bookmark" type="button" data-favorit="' + amanTeks(resep.id) + '" aria-pressed="false" aria-label="Simpan resep ' + amanTeks(resep.nama) + '"></button>' +
+      '<button class="shorts-tombol shorts-detail" type="button" aria-label="Buka resep lengkap ' + amanTeks(resep.nama) + '">' +
+        '<span class="shorts-aksi-ikon" aria-hidden="true">📖</span><span class="shorts-aksi-teks">RESEP</span>' +
+      "</button>" +
+      '<button class="shorts-tombol shorts-cari-buka" type="button" aria-label="Cari masakan lain">' +
+        '<span class="shorts-aksi-ikon" aria-hidden="true">🔍</span><span class="shorts-aksi-teks">CARI</span>' +
+      "</button>" +
+    "</div>";
+
+  // Tombol simpan memakai sistem favorit yang sama dengan daftar resep.
+  const tombolSimpan = item.querySelector(".shorts-bookmark");
+  if (tombolSimpan) aturTampilFavorit(tombolSimpan, daftarFavorit.has(resep.id));
+  if (tombolSimpan) {
+    tombolSimpan.addEventListener("click", function (peristiwa) {
+      if (peristiwa && peristiwa.stopPropagation) peristiwa.stopPropagation();
+      tekanFavorit(resep);
+    });
+  }
+
+  const tombolDetail = item.querySelector(".shorts-detail");
+  if (tombolDetail) {
+    tombolDetail.addEventListener("click", function (peristiwa) {
+      if (peristiwa && peristiwa.stopPropagation) peristiwa.stopPropagation();
+      bukaModalShorts(resep);
+    });
+  }
+
+  const tombolCari = item.querySelector(".shorts-cari-buka");
+  if (tombolCari) {
+    tombolCari.addEventListener("click", function (peristiwa) {
+      if (peristiwa && peristiwa.stopPropagation) peristiwa.stopPropagation();
+      bukaKotakCariShorts();
+    });
+  }
+
+  return item;
+}
+
+function pasangPengamatShorts() {
+  const feed = document.getElementById("shorts-feed");
+  if (!feed || !feed.querySelectorAll) return;
+  const itemSemua = feed.querySelectorAll(".shorts-item");
+
+  // Pemantau memutuskan video mana yang sedang tampil di layar.
+  if (typeof IntersectionObserver !== "undefined") {
+    pengamatShorts = new IntersectionObserver(function (entri) {
+      entri.forEach(function (satu) {
+        const item = satu.target;
+        if (satu.isIntersecting && satu.intersectionRatio >= 0.55) {
+          pasangVideoItemShorts(item);
+          const resep = cariResepShorts(item.dataset.id);
+          if (item !== itemAktifShorts) {
+            letakkanItemAktifShorts(item, resep);
+          }
+        } else if (!satu.isIntersecting) {
+          const video = item.querySelector ? item.querySelector("video") : null;
+          if (video && video.pause) video.pause();
+          if (satu.intersectionRatio === 0) lepasVideoItemShorts(item);
+        }
+      });
+    }, { root: feed, threshold: [0, 0.55, 0.9] });
+    itemSemua.forEach(function (item) { pengamatShorts.observe(item); });
+    return;
+  }
+
+  // Cadangan untuk browser lama: aktifkan video pertama saja.
+  if (itemSemua.length > 0) {
+    pasangVideoItemShorts(itemSemua[0]);
+    letakkanItemAktifShorts(itemSemua[0], cariResepShorts(itemSemua[0].dataset.id));
+  }
+}
+
+function cariResepShorts(id) {
+  return aplikasi.semuaResep.find(function (r) { return r.id === id; });
+}
+
+// Memasang tautan video hanya saat item mendekati layar.
+function pasangVideoItemShorts(item) {
+  const video = item.querySelector ? item.querySelector("video") : null;
+  if (!video) return;
+  const tautan = item.dataset.video || "";
+  if (!tautan) return;
+  if (video.getAttribute("src") !== tautan) {
+    video.setAttribute("src", tautan);
+    if (video.load) video.load();
+  }
+  video.muted = !suaraShortsNyala;
+  pilihVideoTerpasang(video);
+}
+
+// Melepas tautan video dari item yang jauh (menghemat memori HP lansia).
+function lepasVideoItemShorts(item) {
+  const video = item.querySelector ? item.querySelector("video") : null;
+  if (!video) return;
+  if (video.pause) video.pause();
+  video.removeAttribute("src");
+  if (video.load) video.load();
+}
+
+// Video mana yang sedang dilihat + hitung 3 detik untuk poin selera.
+function letakkanItemAktifShorts(item, resep) {
+  itemAktifShorts = item;
+  clearTimeout(jedaLihatShorts);
+  if (!resep || sudahDihitungShorts.has(resep.id)) return;
+  jedaLihatShorts = setTimeout(function () {
+    if (itemAktifShorts !== item) return; // sudah digeser ke video lain
+    sudahDihitungShorts.add(resep.id);
+    catatSkorFyp(resep);
+  }, LAMA_LIHAT_SHORTS);
+}
+
+function alihSuaraShorts() {
+  suaraShortsNyala = !suaraShortsNyala;
+  const tombol = document.getElementById("shorts-suara");
+  const ikon = document.getElementById("shorts-ikon-suara");
+  const teks = tombol ? tombol.querySelector(".shorts-suara-teks") : null;
+  if (tombol) tombol.setAttribute("aria-pressed", suaraShortsNyala ? "true" : "false");
+  if (ikon) ikon.textContent = suaraShortsNyala ? "🔊" : "🔇";
+  if (teks) teks.textContent = suaraShortsNyala ? "SUARA NYALA" : "SUARA MATI";
+
+  const feed = document.getElementById("shorts-feed");
+  if (!feed || !feed.querySelectorAll) return;
+  feed.querySelectorAll("video").forEach(function (video) {
+    video.muted = !suaraShortsNyala;
+    // Menyalakan suara butuh sentuhan pengguna — klik tombol ini sudah cukup.
+    if (suaraShortsNyala) pilihVideoTerpasang(video);
+  });
+}
+
+function bukaKotakCariShorts() {
+  const bungkus = document.getElementById("shorts-cari-bungkus");
+  const kotak = document.getElementById("shorts-cari");
+  if (bungkus) bungkus.hidden = false;
+  if (kotak) kotak.focus();
+}
+
+function tutupKotakCariShorts() {
+  const bungkus = document.getElementById("shorts-cari-bungkus");
+  const kotak = document.getElementById("shorts-cari");
+  if (kotak) kotak.value = "";
+  if (bungkus) bungkus.hidden = true;
+  gambarFeedShorts(bangunAntreanShorts()); // kembalikan antrean sesuai selera
+}
+
+// Menyaring video yang paling mirip dengan kata yang diketik ibu.
+function saringAntreanShorts(kata) {
+  const cari = String(kata || "").toLowerCase().trim();
+  if (cari === "") return bangunAntreanShorts();
+  const cocok = [];
+  aplikasi.semuaResep.forEach(function (resep) {
+    if (!resep.video_tutorial || resep.video_tutorial.length === 0) return;
+    let nilai = 0;
+    if (String(resep.nama).toLowerCase().includes(cari)) nilai = 3;
+    else if (String(resep.daerah).toLowerCase().includes(cari)) nilai = 2;
+    else {
+      const bahan = (resep.bahan || resep.bahanUtama || []).concat(resep.bumbu || []);
+      if (bahan.some(function (item) {
+        return String(item.nama).toLowerCase().includes(cari);
+      })) nilai = 1;
+    }
+    if (nilai > 0) cocok.push({ resep: resep, nilai: nilai });
+  });
+  cocok.sort(function (a, b) { return b.nilai - a.nilai; });
+  return cocok.map(function (x) { return x.resep; });
+}
+
+function saringShorts(kata) {
+  const cari = String(kata || "").toLowerCase().trim();
+  if (cari === "") {
+    gambarFeedShorts(bangunAntreanShorts()); // kosong = kembali ke antrean selera
+    return;
+  }
+  const hasil = saringAntreanShorts(cari);
+  gambarFeedShorts(hasil);
+  tulisStatusCariShorts(kata.trim(), hasil);
+}
+
+function bukaModalShorts(resep) {
+  const modal = document.getElementById("shorts-modal");
+  const isi = document.getElementById("isi-resep-modal");
+  if (!modal || !isi) return;
+  catatSkorFyp(resep); // membuka resep = minat ibu naik (+1 poin selera)
+  gambarDetailResep(resep, isi, true);
+  modal.hidden = false;
+  modal.scrollTop = 0;
+  jedaShortsHentikanVideo(); // video jeda dulu supaya ibu fokus membaca
+}
+
+function tutupModalShorts() {
+  const modal = document.getElementById("shorts-modal");
+  const isi = document.getElementById("isi-resep-modal");
+  if (modal) modal.hidden = true;
+  if (isi) isi.innerHTML = "";
+  aplikasi.modePasar = false;
+  if (itemAktifShorts) pasangVideoItemShorts(itemAktifShorts); // video lanjut diputar
 }
 
 /* ---------------------------------------------------------

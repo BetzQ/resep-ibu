@@ -40,6 +40,18 @@
 
     <div class="pemisah-bagian"></div>
 
+    <!-- ============ PINTU MASUK MODE SHORTS (VIDEO OTOMATIS) ============ -->
+    <section aria-label="Mode Shorts">
+      <button id="tombol-shorts" class="tombol-shorts" type="button">
+        📱 MODE SHORTS — TONTON VIDEO MASAKAN OTOMATIS
+      </button>
+      <p class="teks-kecil-abu teks-tengah">
+        Video pendek diputar sendiri (tanpa suara). Geser ke atas/bawah untuk pindah masakan.
+      </p>
+    </section>
+
+    <div class="pemisah-bagian"></div>
+
     <!-- ============ HALAMAN DAFTAR RESEP ============ -->
     <section id="halaman-daftar">
       <div class="kotak-pencarian">
@@ -81,6 +93,46 @@
       <div id="isi-resep"></div>
 
       <button id="tombol-kembali-bawah" class="tombol-kembali">⬅️ KEMBALI KE DAFTAR RESEP</button>
+    </section>
+
+    <!-- ============ HALAMAN MODE SHORTS (VIDEO VERTIKAL PENUH LAYAR) ============ -->
+    <section id="halaman-shorts" class="halaman-shorts" hidden aria-label="Mode Shorts resep">
+
+      <!-- Tombol kendali besar di pojok atas -->
+      <button id="shorts-keluar" class="shorts-keluar" type="button" aria-label="Keluar dari Mode Shorts">✕ KELUAR</button>
+      <button id="shorts-suara" class="shorts-suara" type="button" aria-pressed="false">
+        <span id="shorts-ikon-suara" aria-hidden="true">🔇</span>
+        <span class="shorts-suara-teks">SUARA MATI</span>
+      </button>
+
+      <!-- Kolom video yang digeser naik/turun -->
+      <div id="shorts-feed" class="shorts-feed" tabindex="0" aria-label="Daftar video masakan"></div>
+
+      <!-- Bilah pencarian di dalam Mode Shorts -->
+      <div id="shorts-cari-bungkus" class="shorts-cari-bungkus" hidden>
+        <input
+          type="search"
+          id="shorts-cari"
+          class="shorts-cari"
+          placeholder="🔍 Ketik nama masakan, daerah, atau bahan…"
+          autocomplete="off"
+          aria-label="Cari masakan di Mode Shorts"
+        />
+        <button id="shorts-cari-tutup" class="shorts-cari-tutup" type="button" aria-label="Tutup pencarian">✕</button>
+      </div>
+
+      <p id="shorts-status" class="shorts-status" hidden></p>
+
+      <!-- Catatan kecil panduan untuk ibu-ibu -->
+      <p id="shorts-panduan" class="shorts-panduan">⬆️ Geser ke atas untuk masakan berikutnya</p>
+
+      <!-- Modal resep lengkap (bumbu & cara masak) tanpa keluar dari Mode Shorts -->
+      <div id="shorts-modal" class="shorts-modal" hidden>
+        <div class="shorts-modal-dalam">
+          <button id="shorts-modal-tutup" class="shorts-modal-tutup" type="button">✕ TUTUP RESEP — KEMBALI KE VIDEO</button>
+          <div id="isi-resep-modal"></div>
+        </div>
+      </div>
     </section>
 
     <!-- Tombol ke atas mengambang — muncul otomatis saat menggulir jauh (layar HP/tablet) -->

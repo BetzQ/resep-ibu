@@ -702,6 +702,322 @@ body {
 }
 
 /* =========================================================
+   PINTU MASUK MODE SHORTS
+   ========================================================= */
+.tombol-shorts {
+  display: block;
+  width: 100%;
+  font-family: inherit;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #ffffff;
+  background: #1f2937;
+  border: 4px solid #000000;
+  border-radius: 18px;
+  padding: 20px 16px;
+  margin: 0 0 10px 0;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.tombol-shorts:hover { background: #374151; }
+.tombol-shorts:focus-visible { outline: 5px solid #f59e0b; outline-offset: 3px; }
+
+/* Saat Mode Shorts terbuka, halaman di belakang tidak ikut bergulir */
+.kunci-gerak-shorts { overflow: hidden; }
+
+/* =========================================================
+   MODE SHORTS (VIDEO VERTIKAL PENUH LAYAR)
+   ========================================================= */
+.halaman-shorts {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  height: 100vh;
+  height: 100dvh;
+  background: #0e0e0e;
+  overflow: hidden;
+}
+
+/* Kolom video: geser naik/turun dengan sentuhan jari */
+.shorts-feed {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  background: #0e0e0e;
+}
+
+.shorts-item {
+  position: relative;
+  height: 100%;
+  min-height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overflow: hidden;
+  background: #0e0e0e;
+}
+
+/* Video latar: tidak pernah menahan sentuhan jari (pointer-events: none) */
+.shorts-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  background: #0e0e0e;
+}
+
+/* Lapisan transparan penutup video: memastikan gesture geser selalu
+   diteruskan ke kolom feed, bukan tertahan pemutar video. */
+.shorts-overlay-geser {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: transparent;
+  pointer-events: none;
+}
+
+/* Gelap lembut di atas & bawah supaya tulisan selalu terbaca jelas */
+.shorts-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.12) 22%,
+    rgba(0, 0, 0, 0) 52%,
+    rgba(0, 0, 0, 0.72) 100%
+  );
+}
+
+/* ---------- Panel identitas masakan (kiri bawah) ---------- */
+.shorts-panel {
+  position: absolute;
+  left: 12px;
+  right: 104px;
+  bottom: 22px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.62);
+  border: 3px solid rgba(255, 255, 255, 0.35);
+  pointer-events: none; /* panel tidak menghalangi geseran jari */
+}
+.shorts-thumb {
+  width: 96px;
+  height: 96px;
+  flex: none;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 4px solid #ffffff;
+  background: #333333;
+}
+.shorts-teks { min-width: 0; }
+.shorts-nama {
+  margin: 0 0 6px 0;
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1.22;
+  color: #ffffff;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+}
+.shorts-asal {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #ffe9b8;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.95);
+}
+
+/* ---------- Deretan tombol aksi (kanan bawah) ---------- */
+.shorts-aksi {
+  position: absolute;
+  right: 10px;
+  bottom: 168px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.shorts-tombol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 84px;
+  min-height: 84px;
+  padding: 10px 6px;
+  font-family: inherit;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.6);
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  border-radius: 22px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.shorts-tombol:focus-visible { outline: 5px solid #f59e0b; outline-offset: 3px; }
+.shorts-aksi-ikon { font-size: 32px; line-height: 1.05; }
+.shorts-aksi-teks {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-align: center;
+}
+.shorts-tombol.aktif {
+  background: var(--warna-hijau);
+  border-color: #ffffff;
+}
+
+/* ---------- Tombol keluar (kiri atas) & suara (kanan atas) ---------- */
+.shorts-keluar,
+.shorts-suara {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top, 0px));
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-weight: 800;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.68);
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.shorts-keluar {
+  left: 12px;
+  font-size: 20px;
+  padding: 14px 16px;
+  border-radius: 16px;
+}
+.shorts-suara {
+  right: 12px;
+  font-size: 28px;
+  padding: 12px 14px;
+  border-radius: 18px;
+}
+.shorts-suara-teks { font-size: 16px; font-weight: 800; }
+.shorts-keluar:focus-visible,
+.shorts-suara:focus-visible { outline: 5px solid #f59e0b; outline-offset: 3px; }
+
+/* ---------- Bilah pencarian di dalam Mode Shorts ---------- */
+.shorts-cari-bungkus {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: calc(84px + env(safe-area-inset-top, 0px));
+  z-index: 9;
+  display: flex;
+  gap: 8px;
+}
+.shorts-cari {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 16px 14px;
+  border: 4px solid #1f2937;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #1f2937;
+}
+.shorts-cari-tutup {
+  flex: none;
+  width: 64px;
+  font-family: inherit;
+  font-size: 26px;
+  font-weight: 800;
+  border: 4px solid #1f2937;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.shorts-status {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: calc(158px + env(safe-area-inset-top, 0px));
+  z-index: 9;
+  margin: 0;
+  padding: 12px 14px;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.72);
+  border-radius: 14px;
+}
+
+.shorts-panduan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  z-index: 3;
+  margin: 0;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+}
+
+/* ---------- Modal resep lengkap di dalam Mode Shorts ---------- */
+.shorts-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--warna-krem);
+}
+.shorts-modal-dalam {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 12px 12px 60px 12px;
+}
+.shorts-modal-tutup {
+  position: sticky;
+  top: 8px;
+  z-index: 3;
+  display: block;
+  width: 100%;
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.3;
+  padding: 16px;
+  margin-bottom: 14px;
+  color: #7f1d1d;
+  background: #ffffff;
+  border: 4px solid #991b1b;
+  border-radius: 16px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.shorts-modal-tutup:focus-visible { outline: 5px solid #f59e0b; outline-offset: 3px; }
+
+.teks-tengah { text-align: center; }
+
+/* =========================================================
    LAYAR HP — disiapkan khusus untuk mata lansia:
    huruf TIDAK diperkecil, tombol lebih tinggi dan mudah
    diketuk, satu kolom penuh, dan tombol kembali menempel
@@ -801,6 +1117,37 @@ body {
     border-radius: 0;
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
   }
+
+  /* ---------- MODE SHORTS di layar HP ---------- */
+  .tombol-shorts { font-size: 24px; padding: 22px 14px; }
+
+  .shorts-keluar { font-size: 19px; padding: 14px 14px; }
+  .shorts-suara { font-size: 26px; padding: 12px 12px; }
+  .shorts-suara-teks { display: none; } /* di HP cukup ikon besar 🔊/🔇 */
+
+  .shorts-panel {
+    left: 10px;
+    right: 96px;
+    bottom: 30px;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 18px;
+  }
+  .shorts-thumb { width: 88px; height: 88px; border-radius: 18px; }
+  .shorts-nama { font-size: 24px; }
+  .shorts-asal { font-size: 18px; }
+
+  .shorts-aksi { right: 8px; bottom: 176px; gap: 12px; }
+  .shorts-tombol { width: 78px; min-height: 78px; border-radius: 20px; }
+  .shorts-aksi-ikon { font-size: 30px; }
+  .shorts-aksi-teks { font-size: 13px; }
+
+  .shorts-cari { font-size: 24px; padding: 18px 14px; }
+  .shorts-cari-tutup { width: 62px; min-height: 62px; }
+  .shorts-status { font-size: 19px; }
+  .shorts-panduan { font-size: 16px; }
+
+  .shorts-modal-tutup { font-size: 21px; padding: 18px 14px; }
 }
 
 /* ---------- HP DIBARINGKAN (LANDSCAPE) — ruang tinggi sempit ---------- */
@@ -812,4 +1159,16 @@ body {
   .kartu-gambar { height: 170px; }
   .foto-resep { max-height: 40vh; }
   #tombol-kembali-atas { font-size: 21px; padding: 12px 14px; }
+
+  /* Mode Shorts dibaringkan: panel dipindah ke bawah, tombol aksi
+     dipadatkan supaya video tetap luas */
+  .shorts-panel { bottom: 12px; right: 92px; padding: 8px; gap: 10px; }
+  .shorts-thumb { width: 64px; height: 64px; border-radius: 14px; border-width: 3px; }
+  .shorts-nama { font-size: 21px; margin-bottom: 2px; }
+  .shorts-asal { font-size: 16px; }
+  .shorts-aksi { bottom: auto; top: 50%; transform: translateY(-46%); gap: 10px; }
+  .shorts-tombol { width: 68px; min-height: 62px; border-radius: 16px; }
+  .shorts-aksi-ikon { font-size: 24px; }
+  .shorts-aksi-teks { font-size: 11px; }
+  .shorts-panduan { display: none; }
 }
