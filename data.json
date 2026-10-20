@@ -2,6 +2,252 @@
   "judul": "Buku Resep Ibu-Ibu",
   "resep": [
     {
+      "id": "gohyong-cikini",
+      "nama": "Gohyong Cikini Goreng",
+      "daerah": "Jakarta — Sedang Viral",
+      "kategori": "nusantara",
+      "viral": true,
+      "waktu": 50,
+      "porsi": "4 orang",
+      "tingkat": "Sedang",
+      "ikon": "🥟",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Chinese_Ngohiong_and_Chorizo.jpg/1280px-Chinese_Ngohiong_and_Chorizo.jpg",
+      "deskripsi": "Gorengan isi daging giling berkulit renyah yang ramai diperbincangkan. Disiram sambal cuko pedas asam manis, nagih sekali.",
+      "bahanUtama": [
+        { "nama": "Daging ayam giling", "jumlah": "400 gram", "ikon": "🍗" },
+        { "nama": "Kulit lumpia", "jumlah": "25 lembar", "ikon": "🥟" },
+        { "nama": "Kol iris", "jumlah": "150 gram", "ikon": "🥬" },
+        { "nama": "Wortel", "jumlah": "2 buah", "ikon": "🥕" },
+        { "nama": "Telur", "jumlah": "2 butir", "ikon": "🥚" },
+        { "nama": "Daun bawang", "jumlah": "3 batang", "ikon": "🌿" },
+        { "nama": "Minyak goreng", "jumlah": "untuk menggoreng", "ikon": "🫙" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "8 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "5 siung", "ikon": "🧄" },
+        { "nama": "Kemiri", "jumlah": "4 butir", "ikon": "🥜" },
+        { "nama": "Ketumbar", "jumlah": "1 sendok teh", "ikon": "🌱" },
+        { "nama": "Lada putih", "jumlah": "½ sendok teh", "ikon": "🧂" },
+        { "nama": "Kecap asin", "jumlah": "1 sendok makan", "ikon": "🫙" },
+        { "nama": "Gula merah untuk cuko", "jumlah": "150 gram", "ikon": "🟤" },
+        { "nama": "Cabai rawit untuk cuko", "jumlah": "15 buah", "ikon": "🌶️" },
+        { "nama": "Cuka", "jumlah": "100 ml", "ikon": "🧴" },
+        { "nama": "Garam dan gula", "jumlah": "secukupnya", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Mangkuk besar", "ikon": "🥣" },
+        { "nama": "Panci kecil", "ikon": "🍲" },
+        { "nama": "Pisau", "ikon": "🔪" }
+      ],
+      "langkah": [
+        "Ulek bawang merah, bawang putih, kemiri, dan ketumbar sampai halus.",
+        "Campur daging giling dengan bumbu halus, telur, dan kecap asin. Aduk rata.",
+        "Masukkan kol, wortel, dan daun bawang. Aduk sampai rata.",
+        "Ambil selembar kulit lumpia, isi 2 sendok makan adonan. Lipat rapat memanjang.",
+        "Goreng dalam minyak panas dengan api sedang sampai keemasan. Tiriskan.",
+        "Rebus gula merah, cabai ulek, cuka, dan air untuk cuko sampai mendidih. Saring.",
+        "Potong-potong gohyong goreng.",
+        "Siram dengan cuko pedas. Sajikan selagi hangat."
+      ],
+      "tips": [
+        "Jangan terlalu penuh mengisi adonan supaya kulit lumpia tidak pecah saat digoreng.",
+        "Cuko paling enak setelah didinginkan dulu supaya rasanya mantap."
+      ]
+    },
+    {
+      "id": "cromboloni",
+      "nama": "Cromboloni",
+      "daerah": "Jajanan Viral Indonesia",
+      "kategori": "nusantara",
+      "viral": true,
+      "waktu": 45,
+      "porsi": "6 orang",
+      "tingkat": "Mudah",
+      "ikon": "🥐",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Cromboloni_di_Sandakan_02.jpg/1280px-Cromboloni_di_Sandakan_02.jpg",
+      "deskripsi": "Perpaduan croissant dan bomboloni: berlapis renyah di luar, lembut di dalam, lalu diisi selai dan diguyur gula halus.",
+      "bahanUtama": [
+        { "nama": "Adonan croissant siap pakai", "jumlah": "500 gram", "ikon": "🥐" },
+        { "nama": "Telur untuk olesan", "jumlah": "1 butir", "ikon": "🥚" },
+        { "nama": "Gula halus", "jumlah": "100 gram", "ikon": "🧂" },
+        { "nama": "Selai cokelat", "jumlah": "150 gram", "ikon": "🍫" },
+        { "nama": "Keju parut", "jumlah": "100 gram", "ikon": "🧀" },
+        { "nama": "Meses cokelat", "jumlah": "untuk taburan", "ikon": "🍫" }
+      ],
+      "bumbu": [
+        { "nama": "Kayu manis bubuk", "jumlah": "½ sendok teh", "ikon": "🟤" },
+        { "nama": "Garam sejumput", "jumlah": "secukupnya", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Oven", "ikon": "🔥" },
+        { "nama": "Loyang", "ikon": "🍽️" },
+        { "nama": "Gelas untuk mencetak", "ikon": "🥛" },
+        { "nama": "Pisau", "ikon": "🔪" },
+        { "nama": "Kantong spuit untuk mengisi", "ikon": "🎂" }
+      ],
+      "langkah": [
+        "Pipihkan adonan croissant setebal 1 cm.",
+        "Cetak bulat dengan bibir gelas. Sisa adonan digiling ulang.",
+        "Olesi permukaan dengan telur kocok.",
+        "Panggang di oven 190 derajat selama 20 menit sampai mengembang dan keemasan.",
+        "Dinginkan dulu. Belah pinggirannya jangan sampai putus.",
+        "Spuitkan selai cokelat atau vla ke dalam lubangnya.",
+        "Balur permukaan dengan gula halus. Taburi meses atau keju.",
+        "Sajikan sebagai camilan sore bersama teh hangat."
+      ],
+      "tips": [
+        "Adonan harus tetap dingin supaya lapisannya renyah dan mengembang.",
+        "Kalau tidak ada oven, adonan bisa digoreng dengan minyak panas api kecil."
+      ]
+    },
+    {
+      "id": "seblak-coet-rafael",
+      "nama": "Seblak Coet Rafael",
+      "daerah": "Bandung — Sedang Viral",
+      "kategori": "nusantara",
+      "viral": true,
+      "waktu": 30,
+      "porsi": "3 orang",
+      "tingkat": "Mudah",
+      "ikon": "🌶️",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Seblak_jeletot.jpg/1280px-Seblak_jeletot.jpg",
+      "deskripsi": "Seblak kering pedas menggelegar yang diulek di coet kecil. Wangi kencurnya bikin nagih dan selalu bikin merinding.",
+      "bahanUtama": [
+        { "nama": "Kerupuk aci mentah", "jumlah": "200 gram", "ikon": "🍘" },
+        { "nama": "Bakso sapi iris", "jumlah": "6 buah", "ikon": "🥩" },
+        { "nama": "Sosis", "jumlah": "4 buah", "ikon": "🌭" },
+        { "nama": "Telur", "jumlah": "1 butir", "ikon": "🥚" },
+        { "nama": "Daun bawang", "jumlah": "2 batang", "ikon": "🌿" },
+        { "nama": "Air", "jumlah": "100 ml", "ikon": "💧" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang putih", "jumlah": "6 siung", "ikon": "🧄" },
+        { "nama": "Bawang merah", "jumlah": "5 siung", "ikon": "🧅" },
+        { "nama": "Cabai rawit merah", "jumlah": "20 buah", "ikon": "🌶️" },
+        { "nama": "Kencur", "jumlah": "4 cm", "ikon": "🫚" },
+        { "nama": "Garam", "jumlah": "1 sendok teh", "ikon": "🧂" },
+        { "nama": "Gula", "jumlah": "½ sendok teh", "ikon": "🧂" },
+        { "nama": "Minyak goreng", "jumlah": "4 sendok makan", "ikon": "🫙" }
+      ],
+      "alat": [
+        { "nama": "Coet / cobek kecil", "ikon": "🥣" },
+        { "nama": "Ulekan", "ikon": "🥄" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Pisau", "ikon": "🔪" }
+      ],
+      "langkah": [
+        "Rendam kerupuk aci dalam air panas 5 menit. Tiriskan.",
+        "Ulek bawang putih, bawang merah, cabai, dan kencur sampai halus.",
+        "Tumis bumbu ulekan dengan minyak sampai harum dan benar-benar matang.",
+        "Masukkan bakso dan sosis. Aduk sebentar.",
+        "Masukkan telur. Orak-arik sampai setengah matang.",
+        "Masukkan kerupuk. Tuang air sedikit. Aduk sampai meresap.",
+        "Bumbui garam dan gula. Masukkan daun bawang. Aduk rata.",
+        "Pindahkan ke coet kecil. Sajikan panas."
+      ],
+      "tips": [
+        "Kencur adalah kunci aromanya, jangan dilewatkan.",
+        "Tingkat pedas bisa diatur dengan banyaknya cabai rawit."
+      ]
+    },
+    {
+      "id": "mochi-bites",
+      "nama": "Mochi Bites Beku",
+      "daerah": "Jajanan Viral Indonesia",
+      "kategori": "nusantara",
+      "viral": true,
+      "waktu": 40,
+      "porsi": "5 orang",
+      "tingkat": "Mudah",
+      "ikon": "🍡",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/ff/Mochi_002.jpg/1280px-Mochi_002.jpg",
+      "deskripsi": "Mochi kecil lembut dengan isian lumer yang dibekukan. Cocok jadi camilan dingin di hari panas.",
+      "bahanUtama": [
+        { "nama": "Tepung ketan", "jumlah": "200 gram", "ikon": "🌾" },
+        { "nama": "Gula pasir", "jumlah": "80 gram", "ikon": "🧂" },
+        { "nama": "Santan cair", "jumlah": "180 ml", "ikon": "🥥" },
+        { "nama": "Tepung maizena", "jumlah": "30 gram", "ikon": "🌾" },
+        { "nama": "Cokelat batang untuk isian", "jumlah": "100 gram", "ikon": "🍫" },
+        { "nama": "Keju mozarella", "jumlah": "100 gram", "ikon": "🧀" },
+        { "nama": "Maizena sangrai untuk baluran", "jumlah": "secukupnya", "ikon": "🌾" }
+      ],
+      "bumbu": [
+        { "nama": "Garam sejumput", "jumlah": "secukupnya", "ikon": "🧂" },
+        { "nama": "Pasta pandan atau stroberi", "jumlah": "secukupnya", "ikon": "🟢" }
+      ],
+      "alat": [
+        { "nama": "Panci kukusan", "ikon": "🧺" },
+        { "nama": "Mangkuk", "ikon": "🥣" },
+        { "nama": "Spatula", "ikon": "🥄" },
+        { "nama": "Wadah tertutup", "ikon": "📦" },
+        { "nama": "Kulkas pembeku", "ikon": "❄️" }
+      ],
+      "langkah": [
+        "Campur tepung ketan, gula, maizena, dan santan. Aduk sampai halus.",
+        "Kukus adonan 25 menit sampai matang. Dinginkan dulu.",
+        "Ambil sedikit adonan. Isi cokelat atau keju. Bulatkan kecil-kecil.",
+        "Gulingkan di maizena sangrai supaya tidak lengket.",
+        "Tata di wadah tertutup. Bekukan minimal 3 jam.",
+        "Keluarkan 5 menit sebelum disajikan.",
+        "Nikmati dingin dengan tekstur kenyal dan isian lumer."
+      ],
+      "tips": [
+        "Isian yang sudah dibeku membuat mochi lebih mudah dibentuk.",
+        "Jangan kelamaan di luar kulkas supaya tidak lembek."
+      ]
+    },
+    {
+      "id": "ayam-chili-oil",
+      "nama": "Ayam Chili Oil",
+      "daerah": "Sedang Viral di Medsos",
+      "kategori": "nusantara",
+      "viral": true,
+      "waktu": 40,
+      "porsi": "4 orang",
+      "tingkat": "Mudah",
+      "ikon": "🍗",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Ayam_geprek_pedas.jpg/1280px-Ayam_geprek_pedas.jpg",
+      "deskripsi": "Ayam goreng renyah disiram chili oil merah menyala. Pedas, gurih, dan bikin nambah nasi terus.",
+      "bahanUtama": [
+        { "nama": "Paha ayam fillet", "jumlah": "500 gram", "ikon": "🍗" },
+        { "nama": "Tepung maizena", "jumlah": "100 gram", "ikon": "🌾" },
+        { "nama": "Bawang putih", "jumlah": "10 siung", "ikon": "🧄" },
+        { "nama": "Cabai kering", "jumlah": "30 buah", "ikon": "🌶️" },
+        { "nama": "Cabai rawit merah", "jumlah": "15 buah", "ikon": "🌶️" },
+        { "nama": "Minyak goreng", "jumlah": "300 ml", "ikon": "🫙" },
+        { "nama": "Daun bawang", "jumlah": "2 batang", "ikon": "🌿" }
+      ],
+      "bumbu": [
+        { "nama": "Kecap asin", "jumlah": "2 sendok makan", "ikon": "🫙" },
+        { "nama": "Garam", "jumlah": "1 sendok teh", "ikon": "🧂" },
+        { "nama": "Merica", "jumlah": "½ sendok teh", "ikon": "🧂" },
+        { "nama": "Gula", "jumlah": "1 sendok teh", "ikon": "🧂" },
+        { "nama": "Kaldu bubuk", "jumlah": "1 sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Mangkuk", "ikon": "🥣" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Saringan", "ikon": "🥅" },
+        { "nama": "Pisau", "ikon": "🔪" }
+      ],
+      "langkah": [
+        "Potong ayam dadu. Lumuri garam, merica, dan kecap asin. Diamkan 15 menit.",
+        "Balur ayam dengan maizena sampai rata.",
+        "Goreng ayam sampai keemasan dan renyah. Angkat, tiriskan.",
+        "Goreng bawang putih dan cabai kering sebentar. Angkat lalu ulek kasar.",
+        "Panaskan minyak, tuang ke ulekan cabai sampai merah dan wangi.",
+        "Masukkan ayam goreng. Aduk cepat sampai terbalut chili oil.",
+        "Taburi daun bawang. Sajikan panas bersama nasi putih."
+      ],
+      "tips": [
+        "Goreng ayam dua kali supaya tetap renyah meski sudah disiram bumbu.",
+        "Chili oil bisa dibuat banyak lalu disimpan di kulkas untuk stok."
+      ]
+    },
+    {
       "id": "rendang",
       "nama": "Rendang Daging",
       "daerah": "Sumatera Barat",

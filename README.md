@@ -5,7 +5,8 @@ Tampilan sederhana, huruf besar, tombol besar, tanpa menu tersembunyi.
 
 ## ✨ Fitur
 
-- **23 resep lengkap** — 18 masakan Nusantara (Rendang, Soto Ayam, Rawon, Pempek, Papeda, Ayam Betutu, Gudeg, Coto Makassar, dll) + 5 masakan dunia (Spaghetti Bolognese, Sushi, Tom Yum, Pizza Margherita, Kari Ayam).
+- **🔥 Section “LAGI RAME DI OMONGIN ORANG!”** di paling atas halaman utama: barisan kartu geser-ke-samping dengan foto besar, judul besar, dan badge merah **“VIRAL!”**. Berisi **5 resep viral permanen** (Gohyong Cikini, Cromboloni, Seblak Coet Rafael, Mochi Bites, Ayam Chili Oil) yang selalu tampil, **plus berita kuliner terbaru otomatis** dari RSS Detik Food (tanpa API key) lewat proxy gratis `rss2json`, difilter kata kunci “Resep”, “Viral”, “Cara Membuat”. Jika internet lambat atau RSS error, 5 resep viral permanen tetap muncul.
+- **28 resep lengkap** — 23 masakan Nusantara (Rendang, Soto Ayam, Rawon, Pempek, Papeda, Ayam Betutu, Gudeg, Coto Makassar, dll) + 5 masakan dunia (Spaghetti Bolognese, Sushi, Tom Yum, Pizza Margherita, Kari Ayam).
 - **Foto masakan besar** di setiap halaman resep.
 - **Bahan Utama, Bumbu, dan Alat Masak** dipisah jadi bagian terpisah. Setiap item punya **ikon kecil** + nama besar + takaran, supaya mudah dikenali.
 - **Mode Pasar (Daftar Belanja)** — tekan tombol hijau **“🛒 Bawa ke Pasar”**, halaman berubah jadi checklist interaktif. Centangan otomatis **tersimpan di `localStorage`** sehingga tidak hilang walaupun browser ditutup atau di-refresh. Ada progres “X dari Y barang sudah dibeli”.
@@ -17,10 +18,10 @@ Tampilan sederhana, huruf besar, tombol besar, tanpa menu tersembunyi.
 ## 📁 Struktur Folder
 
 ```
-index.html   — halaman utama (kerangka halaman)
+index.html   — halaman utama (termasuk section viral di bagian atas)
 style.css    — gaya tampilan huruf besar & kontras tinggi
-app.js       — logika aplikasi, pencarian, checklist pasar (localStorage)
-data.json    — seluruh data resep (bumbu, bahan, alat, langkah, foto)
+app.js       — logika aplikasi, pencarian, checklist pasar, pengambil RSS viral
+data.json    — seluruh data resep (termasuk 5 resep viral permanen)
 ```
 
 ## 🚀 Cara Menjalankan

@@ -33,6 +33,7 @@ async function mulai() {
     aplikasi.semuaResep = data.resep;
     gambarDaftarResep();
     muatDariAlamat(); // kalau dibuka langsung lewat tautan resep
+    fetchViralRecipes(); // section "Lagi Rame" di paling atas
   } catch (error) {
     document.getElementById("daftar-resep").innerHTML =
       '<div class="kotak-pesan">' +
@@ -357,6 +358,178 @@ function perbaruiProgres() {
 }
 
 /* ---------------------------------------------------------
+   4B. SECTION "LAGI RAME DI OMONGIN ORANG!" (RESEP VIRAL)
+   --------------------------------------------------------- */
+
+// RSS kuliner Indonesia yang dilewatkan proxy gratis rss2json.
+const SUMBER_RSS = [
+  "https://food.detik.com/rss",
+  "https://food.detik.com/info-kuliner/rss",
+  "https://www.fimela.com/food/rss"
+];
+
+// Kata kunci agar hanya berita resep/viral yang tampil.
+const KATA_KUNCI_VIRAL = ["resep", "viral", "cara membuat", "cara bikin", "resepnya", "bikin", "trending"];
+const BATAS_BERITA_VIRAL = 8;
+
+// Foto cadangan (dari resep viral permanen) kalau berita tidak punya gambar.
+function fotoCadanganViral(nomor) {
+  const permanen = aplikasi.semuaResep.filter(function (r) { return r.viral === true; });
+  if (permanen.length === 0) return "";
+  return permanen[nomor % permanen.length].gambar;
+}
+
+async function fetchViralRecipes() {
+  const wadah = document.getElementById("viral-cards");
+  const teksStatus = document.getElementById("viral-status");
+  if (!wadah) return;
+
+  const permanen = aplikasi.semuaResep.filter(function (r) { return r.viral === true; });
+
+  // 1) Tampilkan dulu 5 resep viral permanen supaya section tidak pernah kosong.
+  gambarKartuViral(wadah, permanen.map(function (r, i) {
+    return {
+      judul: r.nama,
+      asal: r.daerah,
+      gambar: r.gambar,
+      tipe: "resep",
+      id: r.id,
+      nomor: i
+    };
+  }));
+  teksStatus.textContent =
+    "Menampilkan " + permanen.length + " resep viral andalan. Mengambil berita terbaru…";
+
+  // 2) Coba ambil berita kuliner terbaru lewat rss2json (proxy CORS gratis).
+  try {
+    const berita = await ambilBeritaKuliner();
+    if (berita.length > 0) {
+      gambarKartuViral(wadah, berita.concat(permanen.map(function (r, i) {
+        return {
+          judul: r.nama,
+          asal: r.daerah,
+          gambar: r.gambar,
+          tipe: "resep",
+          id: r.id,
+          nomor: berita.length + i
+        };
+      })));
+      teksStatus.textContent =
+        "✅ " + berita.length + " berita kuliner terbaru berhasil dimuat (sumber: detik Food), " +
+        "ditambah " + permanen.length + " resep viral andalan.";
+    } else {
+      teksStatus.textContent =
+        "Menampilkan " + permanen.length + " resep viral andalan. " +
+        "Berita terbaru sedang tidak tersedia, silakan coba lagi nanti.";
+    }
+  } catch (error) {
+    console.warn("RSS viral gagal dimuat, memakai resep permanen.", error);
+    teksStatus.textContent =
+      "Menampilkan " + permanen.length + " resep viral andalan. " +
+      "Internet lambat, berita terbaru belum bisa dimuat.";
+  }
+
+  pasangTombolGulirViral();
+}
+
+async function ambilBeritaKuliner() {
+  const terlihat = {};
+  const hasil = [];
+
+  for (let s = 0; s < SUMBER_RSS.length; s++) {
+    try {
+      const url =
+        "https://api.rss2json.com/v1/api.json?rss_url=" +
+        encodeURIComponent(SUMBER_RSS[s]) +
+        "&count=20";
+      const jawaban = await fetch(url);
+      if (!jawaban.ok) continue;
+      const data = await jawaban.json();
+      if (data.status !== "ok" || !Array.isArray(data.items)) continue;
+
+      for (let i = 0; i < data.items.length; i++) {
+        const berita = data.items[i];
+        const judul = String(berita.title || "").trim();
+        const tautan = String(berita.link || "").trim();
+        if (!judul || !tautan) continue;
+        if (judul.length > 90) continue;
+
+        const judulKecil = judul.toLowerCase();
+        const cocok = KATA_KUNCI_VIRAL.some(function (kunci) {
+          return judulKecil.includes(kunci);
+        });
+        if (!cocok) continue;
+        if (terlihat[judul]) continue;
+        terlihat[judul] = true;
+
+        const gambar = String(berita.thumbnail || berita.enclosure?.link || "").trim();
+        hasil.push({
+          judul: judul,
+          asal: "Berita terbaru",
+          gambar: gambar || fotoCadanganViral(hasil.length),
+          tipe: "berita",
+          tautan: tautan,
+          nomor: hasil.length
+        });
+        if (hasil.length >= BATAS_BERITA_VIRAL) return hasil;
+      }
+      if (hasil.length > 0) return hasil; // sudah cukup dari satu sumber
+    } catch (error) {
+      console.warn("Sumber RSS gagal:", SUMBER_RSS[s], error);
+    }
+  }
+  return hasil;
+}
+
+function gambarKartuViral(wadah, daftar) {
+  wadah.innerHTML = "";
+  daftar.forEach(function (kartu) {
+    const el = document.createElement("div");
+    el.className = "kartu-viral";
+
+    const gambarHtml =
+      '<img class="gambar-viral" src="' + amanTeks(kartu.gambar) + '" ' +
+      'alt="' + amanTeks(kartu.judul) + '" loading="lazy" onerror="gagalGambar(this)" />';
+    const badgeViral = '<span class="badge-viral">🔥 VIRAL!</span>';
+    const badgeBaru = kartu.tipe === "berita" ? '<span class="badge-baru">BARU</span>' : "";
+
+    const tombolLabel = kartu.tipe === "berita" ? "📰 BACA BERITA" : "🍲 LIHAT RESEPNYA";
+    const isiHtml =
+      '<div class="isi-viral">' +
+        '<h3 class="judul-viral-kartu">' + amanTeks(kartu.judul) + "</h3>" +
+        '<p class="asal-viral-kartu">' + amanTeks(kartu.asal || "") + "</p>" +
+        '<button class="tombol-viral" type="button">' + tombolLabel + "</button>" +
+      "</div>";
+
+    el.innerHTML = gambarHtml + badgeViral + badgeBaru + isiHtml;
+
+    function buka() {
+      if (kartu.tipe === "berita") {
+        window.open(kartu.tautan, "_blank", "noopener");
+      } else {
+        window.location.hash = "#/resep/" + kartu.id;
+      }
+    }
+
+    el.addEventListener("click", buka);
+    const tombolDalam = el.querySelector(".tombol-viral");
+    if (tombolDalam) tombolDalam.addEventListener("click", buka);
+
+    wadah.appendChild(el);
+  });
+}
+
+function pasangTombolGulirViral() {
+  const wadah = document.getElementById("viral-cards");
+  const kiri = document.getElementById("viral-gulir-kiri");
+  const kanan = document.getElementById("viral-gulir-kanan");
+  if (!wadah || !kiri || !kanan) return;
+  const jarak = Math.max(240, wadah.clientWidth - 80);
+  kiri.addEventListener("click", function () { wadah.scrollLeft -= jarak; });
+  kanan.addEventListener("click", function () { wadah.scrollLeft += jarak; });
+}
+
+/* ---------------------------------------------------------
    5. BANTUAN KECIL
    --------------------------------------------------------- */
 // Menjaga agar teks dari data tidak membuka kode berbahaya.
@@ -374,8 +547,22 @@ function gagalGambar(img) {
   const kotak = document.createElement("div");
   kotak.style.cssText =
     "background:#f5efe1;border:4px solid #d9d2c2;display:flex;align-items:center;" +
-    "justify-content:center;text-align:center;font-size:24px;font-weight:800;padding:24px;";
-  kotak.style.height = img.classList.contains("foto-resep") ? "320px" : img.style.height || "220px";
+    "justify-content:center;text-align:center;font-size:24px;font-weight:800;padding:24px;box-sizing:border-box;";
+
+  // Samakan tinggi kotak cadangan dengan tinggi gambar aslinya.
+  const tinggiGambar = img.getBoundingClientRect().height;
+  if (tinggiGambar > 0) {
+    kotak.style.height = Math.round(tinggiGambar) + "px";
+  } else if (img.classList.contains("gambar-viral")) {
+    kotak.style.height = "280px";
+  } else if (img.classList.contains("kartu-gambar")) {
+    kotak.style.height = "220px";
+  } else if (img.classList.contains("foto-resep")) {
+    kotak.style.height = "320px";
+  } else {
+    kotak.style.height = "220px";
+  }
+
   kotak.textContent = "🍽️ " + nama;
   img.replaceWith(kotak);
 }
