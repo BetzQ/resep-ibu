@@ -11,12 +11,16 @@
 
 const KUNCI_LOKAL = "pasar_v1_"; // awalan nama penyimpanan di browser
 
+const JUMLAH_KARTU_AWAL = 24; // kartu dirender bertahap supaya HP lansia tetap lancar
+const JUMLAH_TAMBAHAN = 24;
+
 const aplikasi = {
   semuaResep: [],
   kategoriAktif: "semua",
   kataCari: "",
   modePasar: false,
-  resepAktif: null
+  resepAktif: null,
+  batasTampil: JUMLAH_KARTU_AWAL
 };
 
 /* ---------------------------------------------------------
@@ -46,11 +50,16 @@ async function mulai() {
 }
 
 function pasangTombolUtama() {
-  // Pencarian
+  // Pencarian (dijeda 250ms supaya mengetik cepat tidak bikin HP ngelag)
   const kotakCari = document.getElementById("cari");
+  let jedaCari = null;
   kotakCari.addEventListener("input", function () {
-    aplikasi.kataCari = kotakCari.value.toLowerCase().trim();
-    gambarDaftarResep();
+    clearTimeout(jedaCari);
+    jedaCari = setTimeout(function () {
+      aplikasi.kataCari = kotakCari.value.toLowerCase().trim();
+      aplikasi.batasTampil = JUMLAH_KARTU_AWAL;
+      gambarDaftarResep();
+    }, 250);
   });
 
   // Tombol kategori
@@ -61,6 +70,7 @@ function pasangTombolUtama() {
       });
       tombol.classList.add("aktif");
       aplikasi.kategoriAktif = tombol.dataset.kategori;
+      aplikasi.batasTampil = JUMLAH_KARTU_AWAL;
       gambarDaftarResep();
     });
   });
@@ -68,6 +78,12 @@ function pasangTombolUtama() {
   // Tombol kembali (atas dan bawah)
   document.getElementById("tombol-kembali-atas").addEventListener("click", keDaftarResep);
   document.getElementById("tombol-kembali-bawah").addEventListener("click", keDaftarResep);
+
+  // Tombol "tampilkan lebih banyak" (render bertahap supaya tidak lag)
+  document.getElementById("tombol-muat-lebih").addEventListener("click", function () {
+    aplikasi.batasTampil += JUMLAH_TAMBAHAN;
+    gambarDaftarResep();
+  });
 
   // Perubahan alamat (tombol "kembali" browser)
   window.addEventListener("hashchange", muatDariAlamat);
@@ -81,42 +97,61 @@ function resepTersaring() {
   return aplikasi.semuaResep.filter(function (resep) {
     const cocokKategori =
       aplikasi.kategoriAktif === "semua" || resep.kategori === aplikasi.kategoriAktif;
-    const cocokCari =
-      cari === "" ||
-      resep.nama.toLowerCase().includes(cari) ||
-      resep.daerah.toLowerCase().includes(cari) ||
-      resep.deskripsi.toLowerCase().includes(cari);
-    return cocokKategori && cocokCari;
+    if (!cocokKategori) return false;
+    if (cari === "") return true;
+    if (resep.nama.toLowerCase().includes(cari)) return true;
+    if (resep.daerah.toLowerCase().includes(cari)) return true;
+    if (resep.deskripsi.toLowerCase().includes(cari)) return true;
+    // ikut mencari di nama bahan & bumbu supaya mudah menemukan lauk dari isi kulkas
+    const bahan = resep.bahan || resep.bahanUtama || [];
+    const bumbu = resep.bumbu || [];
+    return bahan.concat(bumbu).some(function (item) {
+      return item.nama.toLowerCase().includes(cari);
+    });
   });
 }
 
 function gambarDaftarResep() {
   const wadah = document.getElementById("daftar-resep");
+  const tombolMuat = document.getElementById("tombol-muat-lebih");
   const daftar = resepTersaring();
   const hitung = document.getElementById("jumlah-resep");
   const kosong = document.getElementById("tidak-ketemu");
 
-  hitung.textContent = daftar.length + " resep siap dibaca.";
+  const tampil = Math.min(aplikasi.batasTampil, daftar.length);
+  const sisa = daftar.length - tampil;
+
+  hitung.textContent =
+    daftar.length + " resep siap dibaca." +
+    (sisa > 0 ? " Menampilkan " + tampil + " dulu, sisanya menyusul." : "");
   kosong.hidden = daftar.length !== 0;
+  tombolMuat.hidden = sisa <= 0;
+  tombolMuat.textContent = "📜 TAMPILKAN LEBIH BANYAK (sisa " + sisa + " resep)";
 
   wadah.innerHTML = "";
-  daftar.forEach(function (resep, nomor) {
-    const tombol = document.createElement("button");
-    tombol.className = "kartu-resep";
-    tombol.type = "button";
-    tombol.innerHTML =
-      '<img class="kartu-gambar" src="' + amanTeks(resep.gambar) + '" alt="' + amanTeks(resep.nama) + '" ' +
-        'loading="lazy" onerror="gagalGambar(this)" />' +
-      '<div class="kartu-isi">' +
-        '<h2 class="kartu-judul">' + resep.ikon + " " + amanTeks(resep.nama) + "</h2>" +
-        '<p class="kartu-asal">📍 ' + amanTeks(resep.daerah) + "</p>" +
-        '<span class="kartu-info">⏱️ ' + resep.waktu + " menit &nbsp;•&nbsp; 👨‍👩‍👧 " + amanTeks(resep.porsi) + "</span>" +
-      "</div>";
-    tombol.addEventListener("click", function () {
-      window.location.hash = "#/resep/" + resep.id;
-    });
-    wadah.appendChild(tombol);
+  const frag = document.createDocumentFragment();
+  for (let nomor = 0; nomor < tampil; nomor++) {
+    frag.appendChild(buatKartuResep(daftar[nomor]));
+  }
+  wadah.appendChild(frag);
+}
+
+function buatKartuResep(resep) {
+  const tombol = document.createElement("button");
+  tombol.className = "kartu-resep";
+  tombol.type = "button";
+  tombol.innerHTML =
+    '<img class="kartu-gambar" src="' + amanTeks(resep.gambar_masakan || resep.gambar) + '" alt="' + amanTeks(resep.nama) + '" ' +
+      'loading="lazy" decoding="async" onerror="gagalGambar(this)" />' +
+    '<div class="kartu-isi">' +
+      '<h2 class="kartu-judul">' + resep.ikon + " " + amanTeks(resep.nama) + "</h2>" +
+      '<p class="kartu-asal">📍 ' + amanTeks(resep.daerah) + "</p>" +
+      '<span class="kartu-info">⏱️ ' + resep.waktu + " menit &nbsp;•&nbsp; 👨‍👩‍👧 " + amanTeks(resep.porsi) + "</span>" +
+    "</div>";
+  tombol.addEventListener("click", function () {
+    window.location.hash = "#/resep/" + resep.id;
   });
+  return tombol;
 }
 
 function keDaftarResep() {
@@ -162,7 +197,7 @@ function bukaResep(id) {
 
 function gambarDetailResep(resep) {
   document.getElementById("isi-resep").innerHTML =
-    '<img class="foto-resep" src="' + amanTeks(resep.gambar) + '" alt="' + amanTeks(resep.nama) + '" onerror="gagalGambar(this)" />' +
+    '<img class="foto-resep" src="' + amanTeks(resep.gambar_masakan || resep.gambar) + '" alt="' + amanTeks(resep.nama) + '" decoding="async" onerror="gagalGambar(this)" />' +
     '<h2 class="judul-resep">' + resep.ikon + " " + amanTeks(resep.nama) + "</h2>" +
     '<p class="asal-resep">📍 ' + amanTeks(resep.daerah) + "</p>" +
     '<p class="deskripsi-resep">' + amanTeks(resep.deskripsi) + "</p>" +
@@ -172,9 +207,9 @@ function gambarDetailResep(resep) {
       '<span class="kotak-info">🎯 Tingkat: ' + amanTeks(resep.tingkat) + "</span>" +
     "</div>" +
     tombolMenujuPasar(resep) +
-    bagianDaftar("🧅 BAHAN UTAMA", resep.bahanUtama, "judul-bagian", false) +
-    bagianDaftar("🌶️ BUMBU-BUMBU", resep.bumbu, "judul-bagian judul-bagian-merah", false) +
-    bagianDaftar("🍳 ALAT MASAK", resep.alat, "judul-bagian judul-bagian-biru", true) +
+    bagianDaftar("🧅 BAHAN UTAMA", resep.bahan || resep.bahanUtama || [], "judul-bagian", false) +
+    bagianDaftar("🌶️ BUMBU-BUMBU", resep.bumbu || [], "judul-bagian judul-bagian-merah", false) +
+    bagianDaftar("🍳 ALAT MASAK", resep.alat_masak || resep.alat || [], "judul-bagian judul-bagian-biru", true) +
     bagianLangkah(resep) +
     bagianTips(resep);
 }
@@ -193,7 +228,7 @@ function bagianDaftar(judul, daftar, kelasJudul, hanyaNama) {
   daftar.forEach(function (item) {
     isi +=
       '<li class="item-baris">' +
-        '<span class="ikon-item" aria-hidden="true">' + item.ikon + "</span>" +
+        gambarIkonItem(item) +
         '<span class="nama-item">' + amanTeks(item.nama) + "</span>" +
         (hanyaNama ? "" : '<span class="jumlah-item">' + amanTeks(item.jumlah) + "</span>") +
       "</li>";
@@ -202,10 +237,30 @@ function bagianDaftar(judul, daftar, kelasJudul, hanyaNama) {
   return isi;
 }
 
+// Ikon bahan/alat: pakai gambar PNG (Noto Emoji) dengan cadangan emoji teks.
+function gambarIkonItem(item) {
+  if (item.gambar_ikon) {
+    return (
+      '<img class="ikon-item-gambar" src="' + amanTeks(item.gambar_ikon) + '" alt="" ' +
+      'loading="lazy" decoding="async" data-emoji="' + amanTeks(item.ikon || "🍽️") + '" ' +
+      'onerror="gagalIkon(this)" />'
+    );
+  }
+  return '<span class="ikon-item" aria-hidden="true">' + (item.ikon || "🍽️") + "</span>";
+}
+
+function gagalIkon(img) {
+  const span = document.createElement("span");
+  span.className = "ikon-item";
+  span.setAttribute("aria-hidden", "true");
+  span.textContent = img.dataset.emoji || "🍽️";
+  img.replaceWith(span);
+}
+
 function bagianLangkah(resep) {
   let isi = '<h3 class="judul-bagian">👩‍🍳 LANGKAH MEMASAK</h3>';
   isi += '<ol class="daftar-langkah">';
-  resep.langkah.forEach(function (langkah, nomor) {
+  (resep.langkah_memasak || resep.langkah || []).forEach(function (langkah, nomor) {
     isi +=
       '<li class="langkah-baris">' +
         '<span class="nomor-langkah">' + (nomor + 1) + "</span>" +
@@ -239,11 +294,11 @@ document.addEventListener("click", function (peristiwa) {
 
 function semuaBarisBeli(resep) {
   const daftar = [];
-  resep.bahanUtama.forEach(function (item, i) {
-    daftar.push({ kunci: "bahan-" + i, nama: item.nama, jumlah: item.jumlah, ikon: item.ikon, jenis: "Bahan Utama" });
+  (resep.bahan || resep.bahanUtama || []).forEach(function (item, i) {
+    daftar.push({ kunci: "bahan-" + i, nama: item.nama, jumlah: item.jumlah, ikon: item.ikon, gambar_ikon: item.gambar_ikon, jenis: "Bahan Utama" });
   });
-  resep.bumbu.forEach(function (item, i) {
-    daftar.push({ kunci: "bumbu-" + i, nama: item.nama, jumlah: item.jumlah, ikon: item.ikon, jenis: "Bumbu" });
+  (resep.bumbu || []).forEach(function (item, i) {
+    daftar.push({ kunci: "bumbu-" + i, nama: item.nama, jumlah: item.jumlah, ikon: item.ikon, gambar_ikon: item.gambar_ikon, jenis: "Bumbu" });
   });
   return daftar;
 }
@@ -283,7 +338,7 @@ function bukaModePasar(resep) {
     isi +=
       '<li class="baris-belanja' + (sudah ? " sudah-dibeli" : "") + '" data-kunci="' + item.kunci + '">' +
         '<input class="kotak-centang" type="checkbox" id="centang-' + item.kunci + '"' + (sudah ? " checked" : "") + " />" +
-        '<span class="ikon-item" aria-hidden="true">' + item.ikon + "</span>" +
+        gambarIkonItem(item) +
         '<label class="nama-belanja" for="centang-' + item.kunci + '">' +
           amanTeks(item.nama) + " <small>(" + amanTeks(item.jumlah) + ")</small>" +
         "</label>" +
@@ -376,7 +431,7 @@ const BATAS_BERITA_VIRAL = 8;
 function fotoCadanganViral(nomor) {
   const permanen = aplikasi.semuaResep.filter(function (r) { return r.viral === true; });
   if (permanen.length === 0) return "";
-  return permanen[nomor % permanen.length].gambar;
+  return permanen[nomor % permanen.length].gambar_masakan || permanen[nomor % permanen.length].gambar || "";
 }
 
 async function fetchViralRecipes() {
@@ -391,7 +446,7 @@ async function fetchViralRecipes() {
     return {
       judul: r.nama,
       asal: r.daerah,
-      gambar: r.gambar,
+      gambar: r.gambar_masakan || r.gambar,
       tipe: "resep",
       id: r.id,
       nomor: i
@@ -408,7 +463,7 @@ async function fetchViralRecipes() {
         return {
           judul: r.nama,
           asal: r.daerah,
-          gambar: r.gambar,
+          gambar: r.gambar_masakan || r.gambar,
           tipe: "resep",
           id: r.id,
           nomor: berita.length + i

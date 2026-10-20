@@ -143,6 +143,12 @@ body {
   outline: 5px solid #f59e0b;
   outline-offset: 3px;
 }
+/* Optimasi: kartu di luar layar tidak dilayout dulu — HP lansia tetap lancar
+   walau ada ratusan resep. Ukuran disimpan supaya halaman tidak "melompat". */
+.grid-resep > .kartu-resep {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 340px;
+}
 .kartu-gambar {
   width: 100%;
   height: 220px;
@@ -233,6 +239,24 @@ body {
 }
 .tombol-netral:focus-visible { outline: 5px solid #f59e0b; outline-offset: 3px; }
 
+/* ---------- TOMBOL TAMPILKAN LEBIH BANYAK ---------- */
+.tombol-muat-lebih {
+  display: block;
+  width: 100%;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--warna-teks);
+  background: var(--warna-krem);
+  border: 4px solid var(--warna-hijau-tua);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 24px 0;
+  cursor: pointer;
+}
+.tombol-muat-lebih:hover { background: #efe4cc; }
+.tombol-muat-lebih:focus-visible { outline: 5px solid #f59e0b; outline-offset: 3px; }
+.tombol-muat-lebih[hidden] { display: none; }
+
 /* ---------- DETAIL RESEP ---------- */
 .foto-resep {
   width: 100%;
@@ -309,6 +333,14 @@ body {
   font-size: 34px;
   line-height: 1;
   flex-shrink: 0;
+}
+/* Ikon bahan/alat berupa gambar PNG (Noto Emoji) — ukuran sama dengan emoji */
+.ikon-item-gambar {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
 }
 .nama-item { font-weight: 700; }
 .jumlah-item {
