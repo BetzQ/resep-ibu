@@ -1,0 +1,1128 @@
+{
+  "judul": "Buku Resep Ibu-Ibu",
+  "resep": [
+    {
+      "id": "rendang",
+      "nama": "Rendang Daging",
+      "daerah": "Sumatera Barat",
+      "kategori": "nusantara",
+      "waktu": 180,
+      "porsi": "6 orang",
+      "tingkat": "Sedang",
+      "ikon": "🍛",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Beef_Rendang..JPG/1280px-Beef_Rendang..JPG",
+      "deskripsi": "Masakan daging sapi yang dimasak lama dalam santan sampai kering dan bumbunya meresap. Kebanggaan masakan Minangkabau.",
+      "bahanUtama": [
+        { "nama": "Daging sapi", "jumlah": "1 kg", "ikon": "🥩" },
+        { "nama": "Santan kental", "jumlah": "800 ml", "ikon": "🥥" },
+        { "nama": "Santan cair", "jumlah": "1 liter", "ikon": "🥥" },
+        { "nama": "Daun jeruk", "jumlah": "5 lembar", "ikon": "🌿" },
+        { "nama": "Serai", "jumlah": "2 batang", "ikon": "🌿" },
+        { "nama": "Lengkuas", "jumlah": "3 cm", "ikon": "🫚" },
+        { "nama": "Daun kunyit", "jumlah": "1 lembar", "ikon": "🌿" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "12 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "5 siung", "ikon": "🧄" },
+        { "nama": "Cabai merah keriting", "jumlah": "15 buah", "ikon": "🌶️" },
+        { "nama": "Jahe", "jumlah": "3 cm", "ikon": "🫚" },
+        { "nama": "Kemiri", "jumlah": "5 butir", "ikon": "🥜" },
+        { "nama": "Ketumbar", "jumlah": "1 sendok teh", "ikon": "🌱" },
+        { "nama": "Lada putih", "jumlah": "½ sendok teh", "ikon": "🧂" },
+        { "nama": "Asam kandis", "jumlah": "2 buah", "ikon": "🍋" },
+        { "nama": "Garam", "jumlah": "2 sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Kuali / wajan besar", "ikon": "🍳" },
+        { "nama": "Sendok kayu besar", "ikon": "🥄" },
+        { "nama": "Kompor", "ikon": "🔥" },
+        { "nama": "Pisau", "ikon": "🔪" },
+        { "nama": "Talenan", "ikon": "🪵" }
+      ],
+      "langkah": [
+        "Potong daging sapi sebesar 4 cm. Cuci bersih lalu tiriskan.",
+        "Ulek bumbu halus: bawang merah, bawang putih, cabai, jahe, kemiri, dan ketumbar.",
+        "Masukkan daging dan bumbu halus ke kuali. Aduk sampai rata.",
+        "Tuang santan cair. Nyalakan api sedang sambil terus diaduk.",
+        "Masukkan daun jeruk, serai, lengkuas, daun kunyit, dan asam kandis.",
+        "Setelah santan menyusut setengah, tuang santan kental. Aduk lebih pelan.",
+        "Masak 2 sampai 3 jam sampai kering dan berminyak. Aduk sering supaya tidak hangus.",
+        "Rendang matang. Bisa langsung disajikan atau disimpan beberapa hari."
+      ],
+      "tips": [
+        "Aduk jangan berhenti, supaya santan tidak pecah.",
+        "Rendang paling enak setelah didiamkan semalam lalu dipanaskan lagi."
+      ]
+    },
+    {
+      "id": "soto-ayam",
+      "nama": "Soto Ayam",
+      "daerah": "Jawa Tengah & Jawa Timur",
+      "kategori": "nusantara",
+      "waktu": 75,
+      "porsi": "4 orang",
+      "tingkat": "Mudah",
+      "ikon": "🍜",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Soto_Ayam_home-made.JPG/1280px-Soto_Ayam_home-made.JPG",
+      "deskripsi": "Kuah kuning bening dari ayam, disajikan dengan tauge, telur, dan kerupuk. Hangat dan menghangatkan badan.",
+      "bahanUtama": [
+        { "nama": "Ayam kampung", "jumlah": "1 ekor", "ikon": "🍗" },
+        { "nama": "Air", "jumlah": "2 liter", "ikon": "💧" },
+        { "nama": "Tauge", "jumlah": "200 gram", "ikon": "🌱" },
+        { "nama": "Daun bawang", "jumlah": "3 batang", "ikon": "🌿" },
+        { "nama": "Telur rebus", "jumlah": "4 butir", "ikon": "🥚" },
+        { "nama": "Kerupuk udang", "jumlah": "secukupnya", "ikon": "🦐" },
+        { "nama": "Nasi putih", "jumlah": "untuk 4 porsi", "ikon": "🍚" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "10 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "4 siung", "ikon": "🧄" },
+        { "nama": "Kunyit", "jumlah": "2 cm", "ikon": "🟡" },
+        { "nama": "Jahe", "jumlah": "3 cm", "ikon": "🫚" },
+        { "nama": "Kemiri", "jumlah": "4 butir", "ikon": "🥜" },
+        { "nama": "Ketumbar", "jumlah": "1 sendok teh", "ikon": "🌱" },
+        { "nama": "Lada", "jumlah": "½ sendok teh", "ikon": "🧂" },
+        { "nama": "Daun jeruk", "jumlah": "4 lembar", "ikon": "🌿" },
+        { "nama": "Serai", "jumlah": "1 batang", "ikon": "🌿" },
+        { "nama": "Garam dan gula", "jumlah": "secukupnya", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Panci besar", "ikon": "🍲" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Pisau", "ikon": "🔪" },
+        { "nama": "Mangkuk saji", "ikon": "🥣" }
+      ],
+      "langkah": [
+        "Rebus ayam sampai empuk. Sisihkan air kaldu.",
+        "Goreng ayam sebentar lalu suwir-suwir dagingnya.",
+        "Ulek bumbu halus sampai benar-benar halus.",
+        "Tumis bumbu halus bersama daun jeruk dan serai sampai harum.",
+        "Tuang air kaldu ke dalam tumisan. Masak sampai mendidih.",
+        "Bumbui dengan garam, gula, dan lada. Cicipi rasanya.",
+        "Susun nasi, tauge, telur potong, dan suwiran ayam di mangkuk.",
+        "Siram dengan kuah panas. Taburi bawang goreng dan kerupuk."
+      ],
+      "tips": [
+        "Tauge direndam air panas sebentar, jangan direbus lama supaya tetap renyah.",
+        "Tambahkan jeruk nipis saat mau dimakan supaya lebih segar."
+      ]
+    },
+    {
+      "id": "rawon",
+      "nama": "Rawon",
+      "daerah": "Jawa Timur",
+      "kategori": "nusantara",
+      "waktu": 120,
+      "porsi": "5 orang",
+      "tingkat": "Sedang",
+      "ikon": "🍲",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Rawon_Setan.jpg/1280px-Rawon_Setan.jpg",
+      "deskripsi": "Sup daging sapi berkuah hitam pekat dari kluwek. Gurih, sedikit manis, sangat khas Jawa Timur.",
+      "bahanUtama": [
+        { "nama": "Daging sapi sandung lamur", "jumlah": "800 gram", "ikon": "🥩" },
+        { "nama": "Air", "jumlah": "2 liter", "ikon": "💧" },
+        { "nama": "Kluwek", "jumlah": "8 buah", "ikon": "🌰" },
+        { "nama": "Daun bawang", "jumlah": "2 batang", "ikon": "🌿" },
+        { "nama": "Tauge", "jumlah": "150 gram", "ikon": "🌱" },
+        { "nama": "Telur rebus", "jumlah": "3 butir", "ikon": "🥚" },
+        { "nama": "Kerupuk", "jumlah": "secukupnya", "ikon": "🍘" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "10 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "4 siung", "ikon": "🧄" },
+        { "nama": "Cabai merah", "jumlah": "5 buah", "ikon": "🌶️" },
+        { "nama": "Kemiri", "jumlah": "4 butir", "ikon": "🥜" },
+        { "nama": "Ketumbar", "jumlah": "1 sendok teh", "ikon": "🌱" },
+        { "nama": "Lengkuas", "jumlah": "3 cm", "ikon": "🫚" },
+        { "nama": "Serai", "jumlah": "1 batang", "ikon": "🌿" },
+        { "nama": "Daun jeruk", "jumlah": "3 lembar", "ikon": "🌿" },
+        { "nama": "Garam dan gula", "jumlah": "secukupnya", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Panci besar", "ikon": "🍲" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Pisau", "ikon": "🔪" },
+        { "nama": "Saringan", "ikon": "🥅" }
+      ],
+      "langkah": [
+        "Rendam kluwek dalam air panas 15 menit. Buang kulitnya lalu haluskan.",
+        "Rebus daging sapi sampai empuk. Sisihkan air kaldu.",
+        "Potong daging ukuran sedang. Sisihkan.",
+        "Ulek bawang merah, bawang putih, cabai, kemiri, dan ketumbar sampai halus.",
+        "Tumis bumbu halus bersama kluwek, lengkuas, serai, dan daun jeruk sampai harum.",
+        "Tuang kaldu ke dalam tumisan. Masukkan daging. Masak 20 menit.",
+        "Bumbui dengan garam dan gula. Cicipi kuahnya.",
+        "Sajikan panas dengan tauge, telur rebus, dan kerupuk."
+      ],
+      "tips": [
+        "Kluwek harus benar-benar matang dan berwarna hitam pekat.",
+        "Kuah rawon paling enak diminum selagi panas."
+      ]
+    },
+    {
+      "id": "pempek",
+      "nama": "Pempek",
+      "daerah": "Palembang, Sumatera Selatan",
+      "kategori": "nusantara",
+      "waktu": 90,
+      "porsi": "5 orang",
+      "tingkat": "Sedang",
+      "ikon": "🐟",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Pempek_campur.JPG/1280px-Pempek_campur.JPG",
+      "deskripsi": "Camilan ikan giling berbentuk lenjer dan kapal selam, disiram cuko yang asam pedas manis.",
+      "bahanUtama": [
+        { "nama": "Ikan tenggiri giling", "jumlah": "500 gram", "ikon": "🐟" },
+        { "nama": "Tapioka", "jumlah": "350 gram", "ikon": "🌾" },
+        { "nama": "Air es", "jumlah": "300 ml", "ikon": "💧" },
+        { "nama": "Telur", "jumlah": "3 butir", "ikon": "🥚" },
+        { "nama": "Timun", "jumlah": "2 buah", "ikon": "🥒" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang putih", "jumlah": "6 siung", "ikon": "🧄" },
+        { "nama": "Garam", "jumlah": "2 sendok teh", "ikon": "🧂" },
+        { "nama": "Gula merah", "jumlah": "200 gram", "ikon": "🟤" },
+        { "nama": "Cuka", "jumlah": "150 ml", "ikon": "🧴" },
+        { "nama": "Cabai rawit merah", "jumlah": "20 buah", "ikon": "🌶️" },
+        { "nama": "Bawang putih untuk cuko", "jumlah": "8 siung", "ikon": "🧄" },
+        { "nama": "Ebi kering", "jumlah": "2 sendok makan", "ikon": "🦐" }
+      ],
+      "alat": [
+        { "nama": "Panci", "ikon": "🍲" },
+        { "nama": "Wajan untuk menggoreng", "ikon": "🍳" },
+        { "nama": "Baskom besar", "ikon": "🥣" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Pisau", "ikon": "🔪" }
+      ],
+      "langkah": [
+        "Campur ikan giling dengan air es sambil diaduk sampai lembut.",
+        "Masukkan bawang putih halus dan garam. Aduk rata.",
+        "Tuang tapioka sedikit demi sedikit sampai adonan bisa dibentuk.",
+        "Ambil adonan, bentuk lenjer panjang atau bulat seperti kapal selam.",
+        "Isi yang kapal selam dengan telur kocok. Tutup rapat.",
+        "Rebus pempek sampai mengapung. Angkat dan tiriskan.",
+        "Rebus gula merah, cabai halus, bawang putih halus, dan ebi untuk cuko. Tambahkan cuka.",
+        "Goreng pempek sampai keemasan. Sajikan dengan cuko dan potongan timun."
+      ],
+      "tips": [
+        "Pempek yang mengapung artinya sudah matang.",
+        "Cuko paling enak jika didiamkan satu hari sebelum dipakai."
+      ]
+    },
+    {
+      "id": "papeda",
+      "nama": "Papeda dengan Ikan Kuah Kuning",
+      "daerah": "Papua",
+      "kategori": "nusantara",
+      "waktu": 60,
+      "porsi": "4 orang",
+      "tingkat": "Mudah",
+      "ikon": "🥘",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Papeda%2C_Kuah_Kuning%2C_Ikan_Tude_Bakar_1.jpg/1280px-Papeda%2C_Kuah_Kuning%2C_Ikan_Tude_Bakar_1.jpg",
+      "deskripsi": "Bubur sagu bening khas Papua, dimakan bersama ikan berkuah kuning dan sambal kolak.",
+      "bahanUtama": [
+        { "nama": "Tepung sagu", "jumlah": "300 gram", "ikon": "🌾" },
+        { "nama": "Air", "jumlah": "1 liter", "ikon": "💧" },
+        { "nama": "Ikan tongkol atau kakap", "jumlah": "500 gram", "ikon": "🐟" },
+        { "nama": "Wortel", "jumlah": "2 buah", "ikon": "🥕" },
+        { "nama": "Daun bawang", "jumlah": "2 batang", "ikon": "🌿" },
+        { "nama": "Jeruk nipis", "jumlah": "2 buah", "ikon": "🍋" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "8 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "3 siung", "ikon": "🧄" },
+        { "nama": "Cabai rawit", "jumlah": "10 buah", "ikon": "🌶️" },
+        { "nama": "Kunyit", "jumlah": "3 cm", "ikon": "🟡" },
+        { "nama": "Jahe", "jumlah": "2 cm", "ikon": "🫚" },
+        { "nama": "Serai", "jumlah": "1 batang", "ikon": "🌿" },
+        { "nama": "Garam", "jumlah": "2 sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Panci", "ikon": "🍲" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Sumpit atau pengaduk kayu", "ikon": "🥢" },
+        { "nama": "Pisau", "ikon": "🔪" }
+      ],
+      "langkah": [
+        "Bersihkan ikan. Lumuri jeruk nipis. Sisihkan.",
+        "Rebus air bersama kunyit, jahe, serai, bawang merah, dan bawang putih halus.",
+        "Masukkan ikan dan wortel. Masak sampai ikan matang.",
+        "Aduk sambal kolak: ulek cabai rawit dengan garam.",
+        "Campur tepung sagu dengan air dingin sampai encer.",
+        "Tuang air panas sedikit demi sedikit ke dalam sagu sambil diaduk kuat.",
+        "Papeda mengental dan berwarna benar seperti lem. Matikan api.",
+        "Sajikan papeda bersama ikan kuah kuning dan sambal kolak."
+      ],
+      "tips": [
+        "Saat menuang air panas, aduk cepat supaya papeda tidak menggumpal.",
+        "Papeda dimakan dengan cara dicocol, tidak pakai sendok."
+      ]
+    },
+    {
+      "id": "ayam-betutu",
+      "nama": "Ayam Betutu",
+      "daerah": "Bali",
+      "kategori": "nusantara",
+      "waktu": 150,
+      "porsi": "6 orang",
+      "tingkat": "Sulit",
+      "ikon": "🍗",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Ayam_Betutu_Bali.jpg/1280px-Ayam_Betutu_Bali.jpg",
+      "deskripsi": "Ayam utuh berisi bumbu genep Bali, dibungkus daun pisang lalu dibakar sampai empuk meresap.",
+      "bahanUtama": [
+        { "nama": "Ayam kampung utuh", "jumlah": "1 ekor", "ikon": "🍗" },
+        { "nama": "Daun pisang", "jumlah": "4 lembar", "ikon": "🌿" },
+        { "nama": "Serai", "jumlah": "3 batang", "ikon": "🌿" },
+        { "nama": "Daun jeruk", "jumlah": "8 lembar", "ikon": "🌿" },
+        { "nama": "Lengkuas", "jumlah": "4 cm", "ikon": "🫚" },
+        { "nama": "Air", "jumlah": "500 ml", "ikon": "💧" },
+        { "nama": "Minyak kelapa", "jumlah": "3 sendok makan", "ikon": "🫙" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "15 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "6 siung", "ikon": "🧄" },
+        { "nama": "Cabai rawit", "jumlah": "15 buah", "ikon": "🌶️" },
+        { "nama": "Cabai merah besar", "jumlah": "5 buah", "ikon": "🌶️" },
+        { "nama": "Kemiri", "jumlah": "6 butir", "ikon": "🥜" },
+        { "nama": "Ketumbar", "jumlah": "2 sendok teh", "ikon": "🌱" },
+        { "nama": "Kunyit", "jumlah": "3 cm", "ikon": "🟡" },
+        { "nama": "Jahe", "jumlah": "3 cm", "ikon": "🫚" },
+        { "nama": "Terasi bakar", "jumlah": "1 sendok teh", "ikon": "🧂" },
+        { "nama": "Garam dan gula", "jumlah": "secukupnya", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Oven atau panggangan", "ikon": "🔥" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Tali rafia atau lidi", "ikon": "🧵" },
+        { "nama": "Talenan", "ikon": "🪵" }
+      ],
+      "langkah": [
+        "Bersihkan ayam. Lumuri jeruk nipis dan garam. Cuci lagi.",
+        "Ulek semua bumbu halus sampai benar-benar lembut.",
+        "Tumis bumbu halus bersama serai, lengkuas, dan daun jeruk sampai harum.",
+        "Balurkan tumisan bumbu ke seluruh badan ayam, termasuk bagian dalam.",
+        "Bungkus ayam rapat dengan daun pisang. Ikat kuat.",
+        "Bakar di atas bara atau panggang dalam oven 180 derajat selama 90 menit.",
+        "Balik sekali supaya matang merata. Siram sisa bumbu.",
+        "Buka bungkusan, potong-potong, sajikan hangat."
+      ],
+      "tips": [
+        "Bumbu betutu makin banyak, makin enak hasilnya.",
+        "Jika tidak ada panggangan, kukus dulu 60 menit lalu panggang sebentar."
+      ]
+    },
+    {
+      "id": "nasi-goreng",
+      "nama": "Nasi Goreng",
+      "daerah": "Nusantara",
+      "kategori": "nusantara",
+      "waktu": 25,
+      "porsi": "2 orang",
+      "tingkat": "Mudah",
+      "ikon": "🍚",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Nasi_goreng_indonesia.jpg/1280px-Nasi_goreng_indonesia.jpg",
+      "deskripsi": "Nasi putih digoreng dengan kecap manis dan bumbu sederhana. Cepat dan selalu jadi andalan keluarga.",
+      "bahanUtama": [
+        { "nama": "Nasi putih dingin", "jumlah": "2 porsi", "ikon": "🍚" },
+        { "nama": "Telur", "jumlah": "2 butir", "ikon": "🥚" },
+        { "nama": "Ayam suwir", "jumlah": "100 gram", "ikon": "🍗" },
+        { "nama": "Daun bawang", "jumlah": "1 batang", "ikon": "🌿" },
+        { "nama": "Kecap manis", "jumlah": "3 sendok makan", "ikon": "🫙" },
+        { "nama": "Bawang goreng", "jumlah": "untuk taburan", "ikon": "🧅" },
+        { "nama": "Timun dan tomat", "jumlah": "untuk pelengkap", "ikon": "🥒" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "6 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "3 siung", "ikon": "🧄" },
+        { "nama": "Cabai merah", "jumlah": "5 buah", "ikon": "🌶️" },
+        { "nama": "Terasi bakar", "jumlah": "½ sendok teh", "ikon": "🧂" },
+        { "nama": "Garam", "jumlah": "½ sendok teh", "ikon": "🧂" },
+        { "nama": "Merica", "jumlah": "¼ sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Spatula", "ikon": "🥄" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Piring saji", "ikon": "🍽️" }
+      ],
+      "langkah": [
+        "Ulek bawang merah, bawang putih, cabai, dan terasi sampai halus.",
+        "Panaskan minyak di wajan. Tumis bumbu halus sampai harum.",
+        "Masukkan telur. Orak-arik sampai setengah matang.",
+        "Tambahkan ayam suwir dan daun bawang. Aduk rata.",
+        "Masukkan nasi. Aduk cepat dengan api besar.",
+        "Tuang kecap manis. Bumbui garam dan merica. Aduk sampai rata dan kering.",
+        "Angkat. Sajikan dengan timun, tomat, dan bawang goreng."
+      ],
+      "tips": [
+        "Nasi goreng paling enak pakai nasi yang sudah dingin dan pulen.",
+        "Gunakan api besar supaya nasi tidak lembek."
+      ]
+    },
+    {
+      "id": "sate-ayam",
+      "nama": "Sate Ayam Madura",
+      "daerah": "Madura, Jawa Timur",
+      "kategori": "nusantara",
+      "waktu": 60,
+      "porsi": "4 orang",
+      "tingkat": "Sedang",
+      "ikon": "🍢",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/67/Sate_Ayam_Madura.jpg/1280px-Sate_Ayam_Madura.jpg",
+      "deskripsi": "Potongan ayam ditusuk lalu dibakar, disiram bumbu kacang yang manis gurih. Aroma bakarannya menggugah selera.",
+      "bahanUtama": [
+        { "nama": "Daging ayam", "jumlah": "700 gram", "ikon": "🍗" },
+        { "nama": "Tusuk sate", "jumlah": "30 batang", "ikon": "🦯" },
+        { "nama": "Kacang tanah goreng", "jumlah": "200 gram", "ikon": "🥜" },
+        { "nama": "Kecap manis", "jumlah": "100 ml", "ikon": "🫙" },
+        { "nama": "Bawang merah", "jumlah": "6 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "3 siung", "ikon": "🧄" },
+        { "nama": "Cabai merah", "jumlah": "10 buah", "ikon": "🌶️" },
+        { "nama": "Lontong", "jumlah": "untuk pelengkap", "ikon": "🍚" }
+      ],
+      "bumbu": [
+        { "nama": "Gula merah", "jumlah": "80 gram", "ikon": "🟤" },
+        { "nama": "Asam jawa", "jumlah": "1 sendok makan", "ikon": "🍋" },
+        { "nama": "Garam", "jumlah": "1 sendok teh", "ikon": "🧂" },
+        { "nama": "Air", "jumlah": "300 ml", "ikon": "💧" }
+      ],
+      "alat": [
+        { "nama": "Panggangan sate", "ikon": "🔥" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Pisau", "ikon": "🔪" },
+        { "nama": "Mangkuk saji", "ikon": "🥣" }
+      ],
+      "langkah": [
+        "Potong daging ayam dadu sedang. Tusuk dengan tusuk sate.",
+        "Ulek kacang tanah goreng, bawang merah, bawang putih, dan cabai.",
+        "Rebus ulekan kacang dengan air, gula merah, asam jawa, dan garam sampai mengental.",
+        "Bakar sate di atas panggangan sambil sesekali dibalik.",
+        "Olesi sate dengan sedikit kecap manis saat setengah matang.",
+        "Angkat sate. Siram dengan bumbu kacang.",
+        "Sajikan bersama lontong dan bawang merah iris."
+      ],
+      "tips": [
+        "Bakar dengan api kecil supaya bagian dalam matang dan luar tidak hangus.",
+        "Olesi panggangan dengan minyak agar sate tidak lengket."
+      ]
+    },
+    {
+      "id": "gudeg",
+      "nama": "Gudeg",
+      "daerah": "Yogyakarta & Jawa Tengah",
+      "kategori": "nusantara",
+      "waktu": 180,
+      "porsi": "6 orang",
+      "tingkat": "Sulit",
+      "ikon": "🍛",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Nasi_Gudeg.jpg/1280px-Nasi_Gudeg.jpg",
+      "deskripsi": "Sayur nangka muda dimasak lama dengan gula merah sampai berwarna cokelat manis. Disajikan dengan telur dan krecek.",
+      "bahanUtama": [
+        { "nama": "Nangka muda", "jumlah": "1 kg", "ikon": "🍈" },
+        { "nama": "Santan", "jumlah": "1 liter", "ikon": "🥥" },
+        { "nama": "Telur rebus", "jumlah": "6 butir", "ikon": "🥚" },
+        { "nama": "Krecek (kulit sapi)", "jumlah": "200 gram", "ikon": "🥓" },
+        { "nama": "Daun salam", "jumlah": "5 lembar", "ikon": "🌿" },
+        { "nama": "Serai", "jumlah": "2 batang", "ikon": "🌿" },
+        { "nama": "Daun jati", "jumlah": "5 lembar", "ikon": "🌿" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "12 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "5 siung", "ikon": "🧄" },
+        { "nama": "Ketumbar", "jumlah": "2 sendok teh", "ikon": "🌱" },
+        { "nama": "Kemiri", "jumlah": "5 butir", "ikon": "🥜" },
+        { "nama": "Gula merah", "jumlah": "300 gram", "ikon": "🟤" },
+        { "nama": "Lengkuas", "jumlah": "4 cm", "ikon": "🫚" },
+        { "nama": "Garam", "jumlah": "2 sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Panci besar", "ikon": "🍲" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Kompresor", "ikon": "🥄" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Pisau", "ikon": "🔪" }
+      ],
+      "langkah": [
+        "Rebus nangka muda sampai empuk. Tiriskan.",
+        "Ulek bawang merah, bawang putih, ketumbar, dan kemiri sampai halus.",
+        "Masukkan nangka ke panci bersama bumbu halus, daun salam, serai, lengkuas, dan daun jati.",
+        "Tuang santan dan gula merah. Masak api kecil.",
+        "Masak sampai kuah menyusut dan nangka berwarna cokelat, sekitar 2 jam.",
+        "Rebus telur sampai matang. Goreng kulit sapi krecek sampai mekar.",
+        "Tumis krecek sebentar dengan sedikit bumbu gudeg.",
+        "Sajikan gudeg dengan nasi, telur, krecek, dan sambal."
+      ],
+      "tips": [
+        "Warna cokelat gudeg datang dari daun jati dan gula merah.",
+        "Masak dengan api kecil supaya gula tidak gosong."
+      ]
+    },
+    {
+      "id": "coto-makassar",
+      "nama": "Coto Makassar",
+      "daerah": "Sulawesi Selatan",
+      "kategori": "nusantara",
+      "waktu": 120,
+      "porsi": "6 orang",
+      "tingkat": "Sedang",
+      "ikon": "🍲",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Coto_makassar.jpg/1280px-Coto_makassar.jpg",
+      "deskripsi": "Sup daging berkuah kacang yang gurih pekat, dimakan dengan ketupat dan sambal roa.",
+      "bahanUtama": [
+        { "nama": "Daging sapi", "jumlah": "700 gram", "ikon": "🥩" },
+        { "nama": "Jeroan sapi", "jumlah": "300 gram", "ikon": "🥓" },
+        { "nama": "Kacang tanah", "jumlah": "150 gram", "ikon": "🥜" },
+        { "nama": "Air", "jumlah": "2,5 liter", "ikon": "💧" },
+        { "nama": "Daun bawang", "jumlah": "3 batang", "ikon": "🌿" },
+        { "nama": "Ketupat", "jumlah": "6 buah", "ikon": "🍚" },
+        { "nama": "Bawang goreng", "jumlah": "untuk taburan", "ikon": "🧅" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "15 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "6 siung", "ikon": "🧄" },
+        { "nama": "Kemiri", "jumlah": "6 butir", "ikon": "🥜" },
+        { "nama": "Ketumbar", "jumlah": "2 sendok teh", "ikon": "🌱" },
+        { "nama": "Lada", "jumlah": "1 sendok teh", "ikon": "🧂" },
+        { "nama": "Jahe", "jumlah": "3 cm", "ikon": "🫚" },
+        { "nama": "Lengkuas", "jumlah": "3 cm", "ikon": "🫚" },
+        { "nama": "Garam", "jumlah": "2 sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Panci besar", "ikon": "🍲" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Saringan", "ikon": "🥅" },
+        { "nama": "Pisau", "ikon": "🔪" }
+      ],
+      "langkah": [
+        "Rebus daging dan jeroan sampai empuk. Sisihkan air kaldu.",
+        "Goreng kacang tanah sampai matang, lalu ulek halus.",
+        "Ulek bawang merah, bawang putih, kemiri, ketumbar, dan lada.",
+        "Tumis bumbu halus bersama jahe dan lengkuas sampai harum.",
+        "Tuang kaldu dan kacang halus ke tumisan. Aduk rata.",
+        "Masukkan daging dan jeroan yang sudah dipotong. Masak 15 menit.",
+        "Bumbui garam. Cicipi rasanya.",
+        "Sajikan panas dengan ketupat, daun bawang, dan bawang goreng."
+      ],
+      "tips": [
+        "Saring kuah supaya hasilnya halus dan enak.",
+        "Tambahkan jeruk nipis dan sambal saat mau dimakan."
+      ]
+    },
+    {
+      "id": "gado-gado",
+      "nama": "Gado-Gado",
+      "daerah": "Betawi, Jakarta",
+      "kategori": "nusantara",
+      "waktu": 45,
+      "porsi": "4 orang",
+      "tingkat": "Mudah",
+      "ikon": "🥗",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Gado-gado_in_Jakarta.JPG/1280px-Gado-gado_in_Jakarta.JPG",
+      "deskripsi": "Sayuran rebus disiram bumbu kacang kental. Segar, bergizi, dan disukai semua usia.",
+      "bahanUtama": [
+        { "nama": "Kangkung", "jumlah": "2 ikat", "ikon": "🥬" },
+        { "nama": "Tauge", "jumlah": "200 gram", "ikon": "🌱" },
+        { "nama": "Kol", "jumlah": "¼ butir", "ikon": "🥬" },
+        { "nama": "Kentang", "jumlah": "3 buah", "ikon": "🥔" },
+        { "nama": "Telur rebus", "jumlah": "4 butir", "ikon": "🥚" },
+        { "nama": "Tahu dan tempe", "jumlah": "masing-masing 4 potong", "ikon": "🧈" },
+        { "nama": "Kerupuk", "jumlah": "secukupnya", "ikon": "🍘" }
+      ],
+      "bumbu": [
+        { "nama": "Kacang tanah goreng", "jumlah": "250 gram", "ikon": "🥜" },
+        { "nama": "Gula merah", "jumlah": "100 gram", "ikon": "🟤" },
+        { "nama": "Bawang putih", "jumlah": "4 siung", "ikon": "🧄" },
+        { "nama": "Cabai merah", "jumlah": "6 buah", "ikon": "🌶️" },
+        { "nama": "Asam jawa", "jumlah": "1 sendok makan", "ikon": "🍋" },
+        { "nama": "Kecap manis", "jumlah": "3 sendok makan", "ikon": "🫙" },
+        { "nama": "Garam", "jumlah": "1 sendok teh", "ikon": "🧂" },
+        { "nama": "Air hangat", "jumlah": "300 ml", "ikon": "💧" }
+      ],
+      "alat": [
+        { "nama": "Panci untuk merebus", "ikon": "🍲" },
+        { "nama": "Wajan untuk menggoreng", "ikon": "🍳" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Piring saji", "ikon": "🍽️" }
+      ],
+      "langkah": [
+        "Rebus kentang sampai empuk. Rebus kangkung, tauge, dan kol sebentar.",
+        "Goreng tahu dan tempe sampai keemasan. Potong-potong.",
+        "Ulek kacang tanah, bawang putih, cabai, gula merah, dan garam.",
+        "Tambahkan air hangat dan asam jawa. Aduk sampai bumbu seperti kuah kental.",
+        "Masukkan kecap manis. Cicipi sampai rasa manis-gurih seimbang.",
+        "Susun semua sayuran, telur, tahu, dan tempe di piring.",
+        "Siram dengan bumbu kacang. Taburi kerupuk."
+      ],
+      "tips": [
+        "Sayuran jangan direbus terlalu lama supaya tetap hijau dan renyah.",
+        "Bumbu kacang bisa disimpan di kulkas beberapa hari."
+      ]
+    },
+    {
+      "nama": "Gulai Ayam",
+      "id": "gulai-ayam",
+      "daerah": "Sumatera Barat",
+      "kategori": "nusantara",
+      "waktu": 75,
+      "porsi": "5 orang",
+      "tingkat": "Sedang",
+      "ikon": "🍛",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Gulai_ayam_masakan_Padang.JPG/1280px-Gulai_ayam_masakan_Padang.JPG",
+      "deskripsi": "Ayam berkuah santan kuning pekat dengan rempah yang kuat. Dimakan dengan nasi panas.",
+      "bahanUtama": [
+        { "nama": "Ayam", "jumlah": "1 ekor potong 8", "ikon": "🍗" },
+        { "nama": "Santan", "jumlah": "800 ml", "ikon": "🥥" },
+        { "nama": "Daun jeruk", "jumlah": "6 lembar", "ikon": "🌿" },
+        { "nama": "Serai", "jumlah": "2 batang", "ikon": "🌿" },
+        { "nama": "Lengkuas", "jumlah": "3 cm", "ikon": "🫚" },
+        { "nama": "Daun kunyit", "jumlah": "1 lembar", "ikon": "🌿" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "10 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "4 siung", "ikon": "🧄" },
+        { "nama": "Cabai merah", "jumlah": "12 buah", "ikon": "🌶️" },
+        { "nama": "Kunyit", "jumlah": "4 cm", "ikon": "🟡" },
+        { "nama": "Jahe", "jumlah": "3 cm", "ikon": "🫚" },
+        { "nama": "Kemiri", "jumlah": "5 butir", "ikon": "🥜" },
+        { "nama": "Ketumbar", "jumlah": "2 sendok teh", "ikon": "🌱" },
+        { "nama": "Garam dan gula", "jumlah": "secukupnya", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Panci / kuali", "ikon": "🍲" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Sendok kayu", "ikon": "🥄" },
+        { "nama": "Pisau", "ikon": "🔪" }
+      ],
+      "langkah": [
+        "Ulek semua bumbu halus sampai lembut.",
+        "Masukkan ayam ke panci bersama bumbu halus dan sedikit air.",
+        "Tambahkan daun jeruk, serai, lengkuas, dan daun kunyit.",
+        "Masak 20 menit sampai bumbu meresap ke ayam.",
+        "Tuang santan. Masak api sedang sambil sesekali diaduk.",
+        "Bumbui garam dan gula. Masak sampai kuah mengental.",
+        "Cicipi. Sajikan panas dengan nasi."
+      ],
+      "tips": [
+        "Jangan biarkan santan mendidih terlalu cepat supaya tidak pecah.",
+        "Gulai ayam lebih enak pakai ayam kampung."
+      ]
+    },
+    {
+      "id": "nasi-kuning",
+      "nama": "Nasi Kuning",
+      "daerah": "Jawa",
+      "kategori": "nusantara",
+      "waktu": 60,
+      "porsi": "6 orang",
+      "tingkat": "Mudah",
+      "ikon": "🍚",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Nasi_Kuning_dan_Ungkep_Ayam.jpg/1280px-Nasi_Kuning_dan_Ungkep_Ayam.jpg",
+      "deskripsi": "Nasi berwarna kuning wangi dari kunyit dan santan. Cocok untuk sarapan atau syukuran.",
+      "bahanUtama": [
+        { "nama": "Beras", "jumlah": "800 gram", "ikon": "🍚" },
+        { "nama": "Santan", "jumlah": "900 ml", "ikon": "🥥" },
+        { "nama": "Kunyit", "jumlah": "4 cm", "ikon": "🟡" },
+        { "nama": "Daun salam", "jumlah": "4 lembar", "ikon": "🌿" },
+        { "nama": "Serai", "jumlah": "1 batang", "ikon": "🌿" },
+        { "nama": "Daun pandan", "jumlah": "2 lembar", "ikon": "🌿" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "6 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "3 siung", "ikon": "🧄" },
+        { "nama": "Ketumbar", "jumlah": "1 sendok teh", "ikon": "🌱" },
+        { "nama": "Garam", "jumlah": "2 sendok teh", "ikon": "🧂" },
+        { "nama": "Gula", "jumlah": "1 sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Panci kukusan", "ikon": "🧺" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" }
+      ],
+      "langkah": [
+        "Cuci beras sampai bersih. Tiriskan.",
+        "Parut atau haluskan kunyit. Peras sarinya.",
+        "Tumis bawang merah, bawang putih, dan ketumbar sampai harum.",
+        "Masukkan beras, santan, sari kunyit, daun salam, serai, dan pandan.",
+        "Masak sambil diaduk sampai santan terserap habis.",
+        "Kukus nasi sampai matang dan pulen, sekitar 30 menit.",
+        "Sajikan dengan lauk pauk dan acar."
+      ],
+      "tips": [
+        "Santan jangan terlalu encer supaya nasi tidak lembek.",
+        "Nasi kuning cocok dibentuk tumpeng untuk acara keluarga."
+      ]
+    },
+    {
+      "id": "bakso",
+      "nama": "Bakso Sapi",
+      "daerah": "Jawa (Solo & Malang)",
+      "kategori": "nusantara",
+      "waktu": 60,
+      "porsi": "5 orang",
+      "tingkat": "Sedang",
+      "ikon": "🍲",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Bakso_Indonesian_Meatball_Soup_from_Solo.jpg/1280px-Bakso_Indonesian_Meatball_Soup_from_Solo.jpg",
+      "deskripsi": "Bulatan daging sapi kenyal dalam kuah kaldu bening. Hangat dan mengenyangkan.",
+      "bahanUtama": [
+        { "nama": "Daging sapi giling", "jumlah": "500 gram", "ikon": "🥩" },
+        { "nama": "Tepung sagu", "jumlah": "150 gram", "ikon": "🌾" },
+        { "nama": "Air es", "jumlah": "200 ml", "ikon": "💧" },
+        { "nama": "Kaldu sapi", "jumlah": "2 liter", "ikon": "💧" },
+        { "nama": "Mie kuning", "jumlah": "250 gram", "ikon": "🍜" },
+        { "nama": "Tauge", "jumlah": "200 gram", "ikon": "🌱" },
+        { "nama": "Daun bawang", "jumlah": "3 batang", "ikon": "🌿" },
+        { "nama": "Bawang goreng", "jumlah": "untuk taburan", "ikon": "🧅" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang putih", "jumlah": "5 siung", "ikon": "🧄" },
+        { "nama": "Garam", "jumlah": "2 sendok teh", "ikon": "🧂" },
+        { "nama": "Merica", "jumlah": "1 sendok teh", "ikon": "🧂" },
+        { "nama": "Gula", "jumlah": "1 sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Panci besar", "ikon": "🍲" },
+        { "nama": "Baskom", "ikon": "🥣" },
+        { "nama": "Sendok", "ikon": "🥄" },
+        { "nama": "Kompor", "ikon": "🔥" }
+      ],
+      "langkah": [
+        "Campur daging giling, air es, bawang putih halus, garam, dan merica.",
+        "Uleni adonan sambil masukkan sagu sedikit demi sedikit.",
+        "Rebus kaldu sampai mendidih, lalu kecilkan api.",
+        "Bulatkan adonan dengan sendok, masukkan ke dalam kaldu panas.",
+        "Masak sampai bakso mengapung. Angkat bakso yang matang.",
+        "Rebus mie dan tauge sebentar. Siapkan di mangkuk.",
+        "Tuang kaldu panas. Taburi daun bawang dan bawang goreng."
+      ],
+      "tips": [
+        "Bakso kenyal karena adonan diuleni sampai kalis.",
+        "Sisa bakso bisa disimpan beku di kulkas."
+      ]
+    },
+    {
+      "id": "mie-goreng",
+      "nama": "Mie Goreng Jawa",
+      "daerah": "Jawa",
+      "kategori": "nusantara",
+      "waktu": 30,
+      "porsi": "3 orang",
+      "tingkat": "Mudah",
+      "ikon": "🍜",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/Mie_goreng.jpg/1280px-Mie_goreng.jpg",
+      "deskripsi": "Mie kuning digoreng dengan sayuran, telur, dan kecap. Manis gurih dan cocok untuk makan malam.",
+      "bahanUtama": [
+        { "nama": "Mie kuning", "jumlah": "400 gram", "ikon": "🍜" },
+        { "nama": "Telur", "jumlah": "3 butir", "ikon": "🥚" },
+        { "nama": "Kol iris", "jumlah": "150 gram", "ikon": "🥬" },
+        { "nama": "Wortel", "jumlah": "2 buah", "ikon": "🥕" },
+        { "nama": "Sawi hijau", "jumlah": "100 gram", "ikon": "🥬" },
+        { "nama": "Kecap manis", "jumlah": "4 sendok makan", "ikon": "🫙" },
+        { "nama": "Bawang goreng", "jumlah": "untuk taburan", "ikon": "🧅" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "6 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "3 siung", "ikon": "🧄" },
+        { "nama": "Cabai merah", "jumlah": "5 buah", "ikon": "🌶️" },
+        { "nama": "Merica", "jumlah": "½ sendok teh", "ikon": "🧂" },
+        { "nama": "Garam", "jumlah": "1 sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Spatula", "ikon": "🥄" },
+        { "nama": "Panci untuk merebus mie", "ikon": "🍲" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" }
+      ],
+      "langkah": [
+        "Rebus mie sampai matang. Tiriskan.",
+        "Ulek bawang merah, bawang putih, dan cabai sampai halus.",
+        "Panaskan minyak. Tumis bumbu halus sampai harum.",
+        "Masukkan telur. Orak-arik sampai matang.",
+        "Tambahkan wortel dan kol. Aduk sampai setengah layu.",
+        "Masukkan mie dan sawi. Tuang kecap manis.",
+        "Bumbui garam dan merica. Aduk rata sampai mie sedikit kering.",
+        "Sajikan hangat dengan bawang goreng dan acar."
+      ],
+      "tips": [
+        "Jangan merebus mie terlalu matang supaya tidak mudah hancur.",
+        "Goreng dengan api besar supaya wangi."
+      ]
+    },
+    {
+      "id": "soto-betawi",
+      "nama": "Soto Betawi",
+      "daerah": "DKI Jakarta",
+      "kategori": "nusantara",
+      "waktu": 90,
+      "porsi": "5 orang",
+      "tingkat": "Sedang",
+      "ikon": "🍲",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Soto_Betawi_%28brighter%29.jpg/1280px-Soto_Betawi_%28brighter%29.jpg",
+      "deskripsi": "Sup daging dan jeroan berkuah susu santan yang gurih. Khas Jakarta betawi.",
+      "bahanUtama": [
+        { "nama": "Daging sapi", "jumlah": "500 gram", "ikon": "🥩" },
+        { "nama": "Ati sapi", "jumlah": "250 gram", "ikon": "🥓" },
+        { "nama": "Santan", "jumlah": "700 ml", "ikon": "🥥" },
+        { "nama": "Susu cair", "jumlah": "300 ml", "ikon": "🥛" },
+        { "nama": "Tomat", "jumlah": "2 buah", "ikon": "🍅" },
+        { "nama": "Daun bawang", "jumlah": "3 batang", "ikon": "🌿" },
+        { "nama": "Kentang goreng", "jumlah": "untuk pelengkap", "ikon": "🥔" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "12 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "5 siung", "ikon": "🧄" },
+        { "nama": "Kemiri", "jumlah": "5 butir", "ikon": "🥜" },
+        { "nama": "Ketumbar", "jumlah": "2 sendok teh", "ikon": "🌱" },
+        { "nama": "Jahe", "jumlah": "3 cm", "ikon": "🫚" },
+        { "nama": "Lengkuas", "jumlah": "3 cm", "ikon": "🫚" },
+        { "nama": "Daun salam", "jumlah": "4 lembar", "ikon": "🌿" },
+        { "nama": "Garam dan gula", "jumlah": "secukupnya", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Panci besar", "ikon": "🍲" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Pisau", "ikon": "🔪" }
+      ],
+      "langkah": [
+        "Rebus daging dan ati sampai empuk. Sisihkan air kaldu.",
+        "Potong daging dan ati ukuran sedang.",
+        "Ulek bawang merah, bawang putih, kemiri, dan ketumbar sampai halus.",
+        "Tumis bumbu halus bersama jahe, lengkuas, dan daun salam sampai harum.",
+        "Tuang kaldu, santan, dan susu ke tumisan. Aduk rata.",
+        "Masukkan daging dan ati. Masak sampai mendidih perlahan.",
+        "Bumbui garam dan gula. Masukkan tomat dan daun bawang.",
+        "Sajikan hangat dengan kentang goreng dan sambal."
+      ],
+      "tips": [
+        "Aduk terus setelah santan dan susu masuk supaya tidak pecah.",
+        "Tambahkan jeruk nipis supaya kuah terasa lebih segar."
+      ]
+    },
+    {
+      "id": "klepon",
+      "nama": "Klepon",
+      "daerah": "Jawa",
+      "kategori": "nusantara",
+      "waktu": 45,
+      "porsi": "4 orang",
+      "tingkat": "Mudah",
+      "ikon": "🍡",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Klepon_Khas_Tulungagung.jpg/1280px-Klepon_Khas_Tulungagung.jpg",
+      "deskripsi": "Kue bulat hijau dari tepung ketan berisi gula merah cair, digulingkan di parutan kelapa.",
+      "bahanUtama": [
+        { "nama": "Tepung ketan", "jumlah": "300 gram", "ikon": "🌾" },
+        { "nama": "Daun pandan", "jumlah": "3 lembar", "ikon": "🌿" },
+        { "nama": "Air hangat", "jumlah": "180 ml", "ikon": "💧" },
+        { "nama": "Pewarna hijau", "jumlah": "secukupnya", "ikon": "🟢" },
+        { "nama": "Kelapa parut", "jumlah": "200 gram", "ikon": "🥥" }
+      ],
+      "bumbu": [
+        { "nama": "Gula merah parut", "jumlah": "150 gram", "ikon": "🟤" },
+        { "nama": "Garam untuk kelapa", "jumlah": "½ sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Panci untuk mengukus", "ikon": "🧺" },
+        { "nama": "Baskom", "ikon": "🥣" },
+        { "nama": "Piring", "ikon": "🍽️" }
+      ],
+      "langkah": [
+        "Kukus kelapa parut bersama sedikit garam selama 10 menit.",
+        "Rebus air bersama daun pandan. Buang daunnya.",
+        "Campur tepung ketan dengan air hangat sedikit demi sedikit.",
+        "Uleni adonan sampai kalis dan bisa dibentuk. Tambahkan pewarna hijau.",
+        "Ambil sedikit adonan, pipihkan, isi gula merah parut, lalu bulatkan.",
+        "Rebus klepon sampai mengapung. Angkat.",
+        "Gulingkan klepon di atas kelapa parut. Sajikan."
+      ],
+      "tips": [
+        "Tutup adonan rapat supaya gula merah tidak bocor saat direbus.",
+        "Klepon paling enak dimakan hangat."
+      ]
+    },
+    {
+      "id": "sambal-bawang",
+      "nama": "Sambal Bawang",
+      "daerah": "Nusantara",
+      "kategori": "nusantara",
+      "waktu": 20,
+      "porsi": "4 orang",
+      "tingkat": "Mudah",
+      "ikon": "🌶️",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/SAMBAL_BAWANG.jpg/1280px-SAMBAL_BAWANG.jpg",
+      "deskripsi": "Sambal sederhana pedas menggigit dari cabai dan bawang. Pelengkap wajib masakan Indonesia.",
+      "bahanUtama": [
+        { "nama": "Cabai rawit merah", "jumlah": "25 buah", "ikon": "🌶️" },
+        { "nama": "Cabai merah besar", "jumlah": "10 buah", "ikon": "🌶️" },
+        { "nama": "Bawang merah", "jumlah": "10 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "4 siung", "ikon": "🧄" },
+        { "nama": "Minyak goreng", "jumlah": "5 sendok makan", "ikon": "🫙" }
+      ],
+      "bumbu": [
+        { "nama": "Garam", "jumlah": "1 sendok teh", "ikon": "🧂" },
+        { "nama": "Gula", "jumlah": "½ sendok teh", "ikon": "🧂" },
+        { "nama": "Terasi bakar", "jumlah": "1 sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Piring saji", "ikon": "🍽️" }
+      ],
+      "langkah": [
+        "Goreng cabai, bawang merah, dan bawang putih sampai layu.",
+        "Angkat semua bahan ke dalam cobek.",
+        "Ulek kasar bersama garam, gula, dan terasi bakar.",
+        "Panaskan minyak sampai benar-benar panas.",
+        "Siram minyak panas ke atas ulekan sambil diaduk cepat.",
+        "Sambal siap. Sajikan bersama nasi dan lauk."
+      ],
+      "tips": [
+        "Ulek kasar supaya teksturnya lebih nikmat.",
+        "Sambal bawang awet beberapa hari jika disimpan dalam wadah tertutup."
+      ]
+    },
+    {
+      "id": "spaghetti-bolognese",
+      "nama": "Spaghetti Bolognese",
+      "daerah": "Italia",
+      "kategori": "dunia",
+      "waktu": 60,
+      "porsi": "4 orang",
+      "tingkat": "Mudah",
+      "ikon": "🍝",
+      "gambar": "https://upload.wikimedia.org/wikipedia/commons/8/83/Spaghetti_Bolognese.jpg",
+      "deskripsi": "Mie panjang Italia dengan saus daging giling tomat yang kaya. Disukai anak-anak dan orang dewasa.",
+      "bahanUtama": [
+        { "nama": "Spaghetti", "jumlah": "400 gram", "ikon": "🍝" },
+        { "nama": "Daging sapi giling", "jumlah": "400 gram", "ikon": "🥩" },
+        { "nama": "Saus tomat kaleng", "jumlah": "400 gram", "ikon": "🍅" },
+        { "nama": "Tomat segar", "jumlah": "3 buah", "ikon": "🍅" },
+        { "nama": "Wortel", "jumlah": "1 buah", "ikon": "🥕" },
+        { "nama": "Seledri", "jumlah": "2 batang", "ikon": "🌿" },
+        { "nama": "Keju parmesan", "jumlah": "untuk taburan", "ikon": "🧀" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang bombay", "jumlah": "1 buah", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "3 siung", "ikon": "🧄" },
+        { "nama": "Daun basil kering", "jumlah": "1 sendok teh", "ikon": "🌿" },
+        { "nama": "Oregano", "jumlah": "1 sendok teh", "ikon": "🌿" },
+        { "nama": "Lada", "jumlah": "½ sendok teh", "ikon": "🧂" },
+        { "nama": "Garam", "jumlah": "1 sendok teh", "ikon": "🧂" },
+        { "nama": "Minyak zaitun", "jumlah": "3 sendok makan", "ikon": "🫙" }
+      ],
+      "alat": [
+        { "nama": "Panci besar", "ikon": "🍲" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Pisau", "ikon": "🔪" },
+        { "nama": "Talenan", "ikon": "🪵" }
+      ],
+      "langkah": [
+        "Rebus spaghetti sampai matang sesuai petunjuk kemasan. Tiriskan.",
+        "Cincang halus bawang bombay, bawang putih, wortel, dan seledri.",
+        "Panaskan minyak zaitun. Tumis bawang bombay dan bawang putih sampai wangi.",
+        "Masukkan daging giling. Aduk sampai berubah warna.",
+        "Tambahkan tomat, saus tomat, basil, oregano, garam, dan lada.",
+        "Masak api kecil selama 30 menit sampai saus kental.",
+        "Susun spaghetti di piring. Siram saus bolognese.",
+        "Taburi keju parmesan parut. Sajikan hangat."
+      ],
+      "tips": [
+        "Saus makin lama dimasak, makin enak rasanya.",
+        "Simpan sedikit air rebusan mie untuk mengencangkan saus."
+      ]
+    },
+    {
+      "id": "sushi",
+      "nama": "Sushi Nigiri Sederhana",
+      "daerah": "Jepang",
+      "kategori": "dunia",
+      "waktu": 50,
+      "porsi": "4 orang",
+      "tingkat": "Sedang",
+      "ikon": "🍣",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Sushi_mini_set_01.jpg/1280px-Sushi_mini_set_01.jpg",
+      "deskripsi": "Nasi kecil di atas potongan ikan segar. Sederhana dibuat di rumah tanpa alat khusus.",
+      "bahanUtama": [
+        { "nama": "Beras Jepang", "jumlah": "400 gram", "ikon": "🍚" },
+        { "nama": "Ikan segar untuk sushi", "jumlah": "300 gram", "ikon": "🐟" },
+        { "nama": "Cuka beras", "jumlah": "60 ml", "ikon": "🧴" },
+        { "nama": "Gula", "jumlah": "2 sendok makan", "ikon": "🧂" },
+        { "nama": "Garam", "jumlah": "1 sendok teh", "ikon": "🧂" },
+        { "nama": "Wasabi", "jumlah": "secukupnya", "ikon": "🟢" },
+        { "nama": "Kecap asin", "jumlah": "untuk celup", "ikon": "🫙" }
+      ],
+      "bumbu": [
+        { "nama": "Rumput laut kering", "jumlah": "1 lembar", "ikon": "🌿" },
+        { "nama": "Jahe acar", "jumlah": "untuk pelengkap", "ikon": "🫚" }
+      ],
+      "alat": [
+        { "nama": "Panci penanak nasi", "ikon": "🍲" },
+        { "nama": "Mangkuk kayu", "ikon": "🥣" },
+        { "nama": "Pisau tajam", "ikon": "🔪" },
+        { "nama": "Talenan", "ikon": "🪵" }
+      ],
+      "langkah": [
+        "Cuci beras beberapa kali sampai air bening. Masak sampai matang.",
+        "Campur cuka beras, gula, dan garam. Panaskan sebentar sampai larut.",
+        "Siram cuka ke nasi panas. Aduk dengan gerakan membelah, lalu dinginkan.",
+        "Potong ikan ukuran 5 cm dengan tebal 1 cm.",
+        "Basahi tangan dengan air. Ambil sedikit nasi, bentuk lonjong kecil.",
+        "Letakkan potongan ikan di atas nasi. Tekan perlahan.",
+        "Sajikan dengan wasabi, kecap asin, dan jahe acar."
+      ],
+      "tips": [
+        "Gunakan ikan yang pasti segar dan aman dimakan.",
+        "Tangan basah membuat nasi tidak lengket saat dibentuk."
+      ]
+    },
+    {
+      "id": "tom-yum",
+      "nama": "Tom Yum Goong",
+      "daerah": "Thailand",
+      "kategori": "dunia",
+      "waktu": 40,
+      "porsi": "4 orang",
+      "tingkat": "Mudah",
+      "ikon": "🍤",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Tom_yum_goong-01.jpg/1280px-Tom_yum_goong-01.jpg",
+      "deskripsi": "Sup udang Thailand yang pedas, asam, dan wangi serai. Segar sekali untuk makan malam.",
+      "bahanUtama": [
+        { "nama": "Udang besar", "jumlah": "400 gram", "ikon": "🦐" },
+        { "nama": "Air", "jumlah": "1 liter", "ikon": "💧" },
+        { "nama": "Jamur champignon", "jumlah": "200 gram", "ikon": "🍄" },
+        { "nama": "Tomat", "jumlah": "2 buah", "ikon": "🍅" },
+        { "nama": "Daun bawang", "jumlah": "2 batang", "ikon": "🌿" },
+        { "nama": "Jeruk nipis", "jumlah": "3 buah", "ikon": "🍋" },
+        { "nama": "Susu santan", "jumlah": "200 ml", "ikon": "🥥" }
+      ],
+      "bumbu": [
+        { "nama": "Serai", "jumlah": "3 batang", "ikon": "🌿" },
+        { "nama": "Lengkuas", "jumlah": "4 cm", "ikon": "🫚" },
+        { "nama": "Daun jeruk", "jumlah": "6 lembar", "ikon": "🌿" },
+        { "nama": "Cabai rawit", "jumlah": "8 buah", "ikon": "🌶️" },
+        { "nama": "Bawang putih", "jumlah": "4 siung", "ikon": "🧄" },
+        { "nama": "Saus ikan", "jumlah": "3 sendok makan", "ikon": "🫙" },
+        { "nama": "Gula", "jumlah": "1 sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Panci", "ikon": "🍲" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Pisau", "ikon": "🔪" },
+        { "nama": "Mangkuk saji", "ikon": "🥣" }
+      ],
+      "langkah": [
+        "Rebus air bersama serai, lengkuas, dan daun jeruk sampai wangi.",
+        "Ulek bawang putih dan cabai rawit kasar.",
+        "Masukkan bumbu ulekan ke panci. Masak 3 menit.",
+        "Tambahkan udang dan jamur. Masak sampai udang berwarna merah.",
+        "Masukkan tomat. Tuang saus ikan dan gula.",
+        "Matikan api. Tambahkan perasan jeruk nipis.",
+        "Sajikan panas dengan taburan daun bawang."
+      ],
+      "tips": [
+        "Jeruk nipis dimasukkan setelah api dimatikan supaya rasanya segar.",
+        "Jangan masak udang terlalu lama supaya tidak alot."
+      ]
+    },
+    {
+      "id": "pizza-margherita",
+      "nama": "Pizza Margherita",
+      "daerah": "Italia",
+      "kategori": "dunia",
+      "waktu": 90,
+      "porsi": "4 orang",
+      "tingkat": "Sedang",
+      "ikon": "🍕",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Margherita_pizza_on_plate.jpg/1280px-Margherita_pizza_on_plate.jpg",
+      "deskripsi": "Pizza klasik dengan saus tomat, keju mozzarella, dan daun basil. Sederhana dan lezat.",
+      "bahanUtama": [
+        { "nama": "Tepung terigu", "jumlah": "400 gram", "ikon": "🌾" },
+        { "nama": "Ragi instant", "jumlah": "1 sendok teh", "ikon": "🍞" },
+        { "nama": "Air hangat", "jumlah": "250 ml", "ikon": "💧" },
+        { "nama": "Saus tomat", "jumlah": "200 gram", "ikon": "🍅" },
+        { "nama": "Keju mozzarella", "jumlah": "250 gram", "ikon": "🧀" },
+        { "nama": "Daun basil segar", "jumlah": "1 ikat kecil", "ikon": "🌿" },
+        { "nama": "Minyak zaitun", "jumlah": "3 sendok makan", "ikon": "🫙" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang putih", "jumlah": "2 siung", "ikon": "🧄" },
+        { "nama": "Garam", "jumlah": "2 sendok teh", "ikon": "🧂" },
+        { "nama": "Oregano", "jumlah": "1 sendok teh", "ikon": "🌿" },
+        { "nama": "Tomat segar", "jumlah": "3 buah", "ikon": "🍅" }
+      ],
+      "alat": [
+        { "nama": "Oven", "ikon": "🔥" },
+        { "nama": "Loyang", "ikon": "🍽️" },
+        { "nama": "Baskom adonan", "ikon": "🥣" },
+        { "nama": "Pisau", "ikon": "🔪" }
+      ],
+      "langkah": [
+        "Larutkan ragi dalam air hangat. Diamkan 10 menit sampai berbusa.",
+        "Campur tepung, garam, dan minyak zaitun. Tuang larutan ragi.",
+        "Uleni adonan 10 menit sampai kalis. Tutup dan diamkan 60 menit.",
+        "Rebus tomat dengan bawang putih, garam, dan oregano sampai halus untuk saus.",
+        "Giling atau pipihkan adonan sesuai bentuk loyang.",
+        "Olesi permukaan dengan saus tomat. Taburi mozzarella potong.",
+        "Panggang di oven 220 derajat selama 15 menit sampai pinggiran keemasan.",
+        "Tambahkan daun basil segar sebelum disajikan."
+      ],
+      "tips": [
+        "Diamkan adonan tertutup supaya mengembang sempurna.",
+        "Oven harus benar-benar panas sebelum pizza dimasukkan."
+      ]
+    },
+    {
+      "id": "kari-ayam",
+      "nama": "Kari Ayam",
+      "daerah": "India",
+      "kategori": "dunia",
+      "waktu": 60,
+      "porsi": "5 orang",
+      "tingkat": "Sedang",
+      "ikon": "🍛",
+      "gambar": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b3/Chicken_Curry_with_Rice.jpg/1280px-Chicken_Curry_with_Rice.jpg",
+      "deskripsi": "Ayam berkuah kari yang harum rempah dan gurih santan. Nikmat disantap dengan nasi putih.",
+      "bahanUtama": [
+        { "nama": "Ayam potong", "jumlah": "800 gram", "ikon": "🍗" },
+        { "nama": "Santan", "jumlah": "500 ml", "ikon": "🥥" },
+        { "nama": "Tomat", "jumlah": "3 buah", "ikon": "🍅" },
+        { "nama": "Kentang", "jumlah": "2 buah", "ikon": "🥔" },
+        { "nama": "Daun kari", "jumlah": "1 ranting", "ikon": "🌿" },
+        { "nama": "Nasi putih", "jumlah": "untuk saji", "ikon": "🍚" }
+      ],
+      "bumbu": [
+        { "nama": "Bawang merah", "jumlah": "10 siung", "ikon": "🧅" },
+        { "nama": "Bawang putih", "jumlah": "4 siung", "ikon": "🧄" },
+        { "nama": "Jahe", "jumlah": "3 cm", "ikon": "🫚" },
+        { "nama": "Kunyit bubuk", "jumlah": "1 sendok teh", "ikon": "🟡" },
+        { "nama": "Bubuk kari", "jumlah": "2 sendok makan", "ikon": "🟠" },
+        { "nama": "Ketumbar bubuk", "jumlah": "1 sendok teh", "ikon": "🌱" },
+        { "nama": "Cabai bubuk", "jumlah": "1 sendok teh", "ikon": "🌶️" },
+        { "nama": "Garam", "jumlah": "2 sendok teh", "ikon": "🧂" }
+      ],
+      "alat": [
+        { "nama": "Panci", "ikon": "🍲" },
+        { "nama": "Wajan", "ikon": "🍳" },
+        { "nama": "Cobek dan ulekan", "ikon": "🥣" },
+        { "nama": "Pisau", "ikon": "🔪" }
+      ],
+      "langkah": [
+        "Ulek bawang merah, bawang putih, dan jahe sampai halus.",
+        "Panaskan minyak. Tumis daun kari sebentar sampai wangi.",
+        "Masukkan bumbu ulekan dan semua bubuk rempah. Aduk sampai harum.",
+        "Masukkan ayam dan kentang. Aduk sampai bumbu melapisi ayam.",
+        "Tambahkan tomat dan air secukupnya. Masak sampai ayam empuk.",
+        "Tuang santan. Masak api kecil sampai kuah mengental.",
+        "Bumbui garam. Cicipi. Sajikan dengan nasi putih panas."
+      ],
+      "tips": [
+        "Tumis bumbu sampai minyak keluar supaya tidak langu.",
+        "Kari ayam lebih enak jika didiamkan sebentar sebelum dimakan."
+      ]
+    }
+  ]
+}

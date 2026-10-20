@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buku Resep Ibu-Ibu — Resep Masakan Lengkap</title>
+  <meta name="description" content="Buku resep masakan interaktif untuk ibu-ibu: resep Nusantara dan dunia lengkap dengan bumbu, alat masak, langkah memasak, dan daftar belanja ke pasar." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ BAGIAN ATAS (TETAP DI ATAS) ============ -->
+  <header class="header-besar">
+    <div class="header-dalam">
+      <h1 class="text-judul">🍲 Buku Resep Ibu-Ibu</h1>
+      <p class="text-subjudul">Resep masakan lengkap, mudah dibaca, mudah dimasak</p>
+    </div>
+  </header>
+
+  <main id="app" class="konten-utama">
+
+    <!-- ============ HALAMAN DAFTAR RESEP ============ -->
+    <section id="halaman-daftar">
+      <div class="kotak-pencarian">
+        <label for="cari" class="label-cari">🔍 Cari nama masakan:</label>
+        <input
+          type="search"
+          id="cari"
+          class="input-cari"
+          placeholder="Contoh: rendang, soto, sushi"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="baris-tombol-filter" id="filter-kategori">
+        <button class="tombol-filter aktif" data-kategori="semua">Semua Resep</button>
+        <button class="tombol-filter" data-kategori="nusantara">🇮🇩 Nusantara</button>
+        <button class="tombol-filter" data-kategori="dunia">🌍 Masakan Dunia</button>
+      </div>
+
+      <p id="jumlah-resep" class="teks-kecil-abu"></p>
+
+      <div id="daftar-resep" class="grid-resep"></div>
+
+      <div id="tidak-ketemu" class="kotak-pesan" hidden>
+        <p class="text-2xl">😕 Resep tidak ditemukan.</p>
+        <p class="teks-kecil-abu mt-2">Coba kata kunci lain, misalnya “ayam”, “ikan”, atau “soto”.</p>
+      </div>
+    </section>
+
+    <!-- ============ HALAMAN DETAIL RESEP ============ -->
+    <section id="halaman-resep" hidden>
+      <button id="tombol-kembali-atas" class="tombol-kembali" tabindex="1">⬅️ KEMBALI KE DAFTAR RESEP</button>
+
+      <div id="isi-resep"></div>
+
+      <button id="tombol-kembali-bawah" class="tombol-kembali">⬅️ KEMBALI KE DAFTAR RESEP</button>
+    </section>
+
+  </main>
+
+  <footer class="footer-halus">
+    <p>Dibuat dengan ♥ untuk ibu-ibu di rumah. Semoga membantu memasak setiap hari.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
