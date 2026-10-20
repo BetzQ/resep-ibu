@@ -55,7 +55,7 @@ body {
 .konten-utama {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 24px 16px 60px 16px;
+  padding: 12px 16px 60px 16px;
 }
 
 /* ---------- PENCARIAN ---------- */
@@ -790,26 +790,60 @@ body {
 }
 
 /* =========================================================
-   PINTU MASUK MODE SHORTS
+   PINTU MASUK MODE SHORTS — DUA TOMBOL BESAR MELAYANG DI ATAS
+   Dibuat sederhana supaya ramah orang tua: dua tombol besar,
+   jelas, dan selalu terlihat saat menggulir (menempel di atas).
    ========================================================= */
-.tombol-shorts {
-  display: block;
+.baris-tombol-utama {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  display: flex;
+  gap: 10px;
   width: 100%;
+  padding: 10px 0;
+  background: var(--warna-latar);
+}
+
+.tombol-shorts,
+.tombol-normal {
+  flex: 1 1 0;
   font-family: inherit;
   font-size: 26px;
-  font-weight: 800;
-  line-height: 1.3;
+  font-weight: 900;
+  line-height: 1.2;
   color: #ffffff;
-  background: #1f2937;
   border: 4px solid #000000;
   border-radius: 18px;
-  padding: 20px 16px;
-  margin: 0 0 10px 0;
+  padding: 20px 12px;
   cursor: pointer;
   touch-action: manipulation;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
 }
-.tombol-shorts:hover { background: #374151; }
-.tombol-shorts:focus-visible { outline: 5px solid #f59e0b; outline-offset: 3px; }
+
+.tombol-shorts {
+  background: #b91c1c;
+  order: 1;
+}
+.tombol-normal {
+  background: #1d4ed8;
+  order: 2;
+}
+
+.tombol-shorts:hover { background: #dc2626; }
+.tombol-normal:hover { background: #2563eb; }
+.tombol-shorts:focus-visible,
+.tombol-normal:focus-visible {
+  outline: 6px solid #f59e0b;
+  outline-offset: 3px;
+}
+/* Tombol yang sedang dipakai diberi garis tebal kuning */
+.tombol-shorts.aktif,
+.tombol-normal.aktif {
+  outline: 6px solid #f59e0b;
+  outline-offset: -8px;
+}
 
 /* Saat Mode Shorts terbuka, halaman di belakang tidak ikut bergulir */
 .kunci-gerak-shorts { overflow: hidden; }
@@ -858,6 +892,32 @@ body {
   object-fit: cover;
   pointer-events: none;
   background: #0e0e0e;
+}
+
+/* Pemutar YouTube di Mode Shorts (video paling nyambung dengan masakannya).
+   Dibuat penuh layar seperti video latar. pointer-events: none supaya
+   geser jari tetap diteruskan ke kolom feed — tidak pernah tertahan. */
+.shorts-yt {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #0e0e0e;
+  pointer-events: none;
+}
+/* Iframe YouTube dibuat lebih besar dari layar (dilebihkan) supaya tepi
+   video menutupi seluruh layar — tidak ada garis hitam di pinggir. */
+.shorts-yt-iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 177.78vh;      /* 16:9 — selalu menutupi tinggi layar HP */
+  height: 100vh;
+  min-width: 100%;
+  min-height: 56.25vw;
+  transform: translate(-50%, -50%);
+  border: 0;
+  pointer-events: none;
 }
 
 /* Lapisan transparan penutup video: memastikan gesture geser selalu
@@ -1119,7 +1179,7 @@ body {
   .header-besar { padding: 16px 14px; border-bottom-width: 6px; }
   .text-judul { font-size: 30px; letter-spacing: 0.5px; }
   .text-subjudul { font-size: 20px; margin-top: 4px; }
-  .konten-utama { padding: 16px 14px 54px 14px; }
+  .konten-utama { padding: 12px 14px 54px 14px; }
 
   /* Pencarian: kotak lega, huruf besar (24px juga mencegah HP
      otomatis memperbesar layar saat kotak disentuh) */
@@ -1211,8 +1271,9 @@ body {
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
   }
 
-  /* ---------- MODE SHORTS di layar HP ---------- */
-  .tombol-shorts { font-size: 24px; padding: 22px 14px; }
+  /* ---------- DUA TOMBOL BESAR di layar HP ---------- */
+  .baris-tombol-utama { gap: 8px; padding: 8px 0; }
+  .tombol-shorts, .tombol-normal { font-size: 22px; padding: 18px 8px; border-radius: 16px; }
 
   .shorts-keluar { font-size: 19px; padding: 14px 14px; }
   .shorts-suara { font-size: 26px; padding: 12px 12px; }
